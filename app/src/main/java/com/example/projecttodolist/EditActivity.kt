@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
-class MainScreen : ComponentActivity() {
+
+class EditActivity : ComponentActivity() {
 
     fun OnCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -13,4 +14,3 @@ class MainScreen : ComponentActivity() {
         }
     }
 }
-
