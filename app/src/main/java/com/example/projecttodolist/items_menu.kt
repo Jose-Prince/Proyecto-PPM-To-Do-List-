@@ -5,7 +5,9 @@ sealed class items_menu(
     val title: String,
     val ruta: String
 ) {
-    object PantallaActivities: items_menu(R.drawable.baseline_format_align_justify_24, "Activity", "screen1")
+    object PantallaActivities: items_menu(R.drawable.baseline_format_align_justify_24,
+        "Activities", "screen1")
 
-    object  PanatllaActivities: items_menu(R.drawable.baseline_more_vert_24, "Configuration", "screen2")
+    object  PantallaConfiguracion: items_menu(R.drawable.baseline_more_vert_24,
+        "Configuration", "screen2")
 }
