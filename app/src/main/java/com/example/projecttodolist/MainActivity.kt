@@ -43,9 +43,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.projecttodolist.Navigation.AppNavigation
+import com.example.projecttodolist.screens.LogInScreen
 import com.example.projecttodolist.ui.theme.ProjectToDoListTheme
 
-class LogIn : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -55,7 +57,7 @@ class LogIn : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginScreen()
+                    AppNavigation()
                 }
             }
         }
@@ -126,7 +128,7 @@ fun LoginScreen() {
         Row {
             Spacer(modifier = Modifier.width(113.dp))
             Button(onClick = {
-                    val intent = Intent(context,MainScreen::class.java)
+                    val intent = Intent(context , MainScreen::class.java)
                     context.startActivity(intent)
                           },
             ) {
@@ -145,9 +147,9 @@ fun LoginScreen() {
             Spacer(modifier = Modifier.width(117.dp))
             Button(
                 onClick = {
-                    val intent = Intent(context,MainScreen::class.java)
+                    val intent = Intent(context,EditActivity::class.java)
                     context.startActivity(intent)},
-                modifier = Modifier.align(Alignment.CenterVertically)
+                //modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(text = "Resgistrarse",
                     fontSize = 21.sp)
@@ -158,9 +160,10 @@ fun LoginScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginPreview() {
+fun MainActivityPreview() {
+    val context = LocalContext.current
     ProjectToDoListTheme {
-        LoginScreen()
+        AppNavigation()
     }
 }
 

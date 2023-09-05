@@ -4,36 +4,41 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.projecttodolist.items_menu.*
+import com.example.projecttodolist.ui.theme.ProjectToDoListTheme
 
 class MainScreen : ComponentActivity() {
 
     fun OnCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContent {
-
+            ProjectToDoListTheme {
+                Surface (modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background)
+                {
+                    MainScr()
+                }
+            }
         }
     }
 }
@@ -41,48 +46,36 @@ class MainScreen : ComponentActivity() {
 @Composable
 @Preview(showBackground = true)
 fun MainScrPrev() {
-
-}
-
-fun MainScr() {
-
+    MainScr()
 }
 
 @Composable
-fun DrawShapeM(
-    shape: Shape,
-    width: Dp = 500.dp,
-    height: Dp = 50.dp
-) {
-    Column (modifier = Modifier
-        .fillMaxWidth()
-        .wrapContentSize(Alignment.TopCenter)) {
-        Box (modifier = Modifier
-            .size(width, height)
-            .clip(shape)
-            .background(color = "#f64836".color))
+fun MainScr() {
+    Box (modifier = Modifier.fillMaxSize()){
+        scr()
+        Box {
+            DrawShape(shape = RectangleShape)
+        }
     }
 }
 
-/*@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
+
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PantallaPrincipal() {
+fun scr() {
     val navController = rememberNavController()
+    val scope = rememberCoroutineScope()
 
     val navigation_item = listOf(
         PantallaActivities,
         PantallaConfiguracion
     )
 
-    Scaffold(
-        bottomBar = {
-            NavegacionInferior(
-                navController = navController,
-                menu_items = navigation_item
-            )
-        }
-    ) {
+    Scaffold (
+        bottomBar = {}
+        ){
         NavigationHost(navController)
     }
 }
@@ -95,13 +88,26 @@ fun currentRoute(navController: NavHostController): String? {
 
 @Composable
 fun NavegacionInferior(
-    navController : NavHostController,
+    navController: NavHostController,
     menu_items : List<items_menu>
 ){
     BottomAppBar {
-
+        BottomNavigation {
+            val currentRoute = currentRoute(navController = navController)
+            menu_items.forEach { item ->
+                BottomNavigationItem(
+                    selected = currentRoute == item.ruta,
+                    onClick = { navController.navigate(item.ruta) },
+                    icon = { Icon(
+                        painter = painterResource(id = item.icon),
+                        contentDescription = item.title) })
+            }
+        }
     }
-}*/
+}
+
+
+
 
 
 
