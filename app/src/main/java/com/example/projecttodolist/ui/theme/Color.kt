@@ -12,7 +12,3 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 //Paleta de colores del proyecto
-val Red = Color(red = 246, green = 48, blue = 36)
-val Pastel = Color(red = 252, green = 233, blue = 216)
-val LightCoral = Color(red = 248, green = 162,blue = 158 )
-val Salmon = Color(red = 246, green = 117, blue = 96)
