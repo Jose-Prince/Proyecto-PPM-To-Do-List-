@@ -128,8 +128,7 @@ fun LoginScreen() {
         Row {
             Spacer(modifier = Modifier.width(113.dp))
             Button(onClick = {
-                    val intent = Intent(context , MainScreen::class.java)
-                    context.startActivity(intent)
+
                           },
             ) {
                 Text(text = "Iniciar sesión",
@@ -147,8 +146,7 @@ fun LoginScreen() {
             Spacer(modifier = Modifier.width(117.dp))
             Button(
                 onClick = {
-                    val intent = Intent(context,EditActivity::class.java)
-                    context.startActivity(intent)},
+                    },
                 //modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(text = "Resgistrarse",

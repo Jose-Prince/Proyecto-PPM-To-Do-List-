@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.projecttodolist.DrawShape
 import com.example.projecttodolist.EditActivity
-import com.example.projecttodolist.MainScreen
 import com.example.projecttodolist.Navigation.AppScreens
 import com.example.projecttodolist.color
 
@@ -118,7 +117,7 @@ fun LogInScreen(navController: NavController) {
             .align(Alignment.CenterHorizontally)){
             Spacer(modifier = Modifier.width(117.dp))
             Button(
-                onClick = { },
+                onClick = { navController.navigate(route = AppScreens.TaskScreen.route) },
                 //modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(text = "Resgistrarse",

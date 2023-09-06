@@ -19,7 +19,7 @@ fun AppNavigation() {
             LogInScreen(navController)
         }
         composable(route = AppScreens.TaskScreen.route){
-            MainTaskScreen(navController)
+            MainTaskScreen()
         }
     }
 }
