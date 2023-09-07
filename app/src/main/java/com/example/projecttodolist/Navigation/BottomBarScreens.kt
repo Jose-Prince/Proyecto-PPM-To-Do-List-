@@ -16,6 +16,6 @@ sealed class BottomBarScreens(
     object Settings: BottomBarScreens(
         route = "settings",
         title = "Settings",
-        icon = R.drawable.baseline_format_align_justify_24
+        icon = R.drawable.baseline_more_vert_24
     )
 }
