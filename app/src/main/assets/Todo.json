@@ -1,0 +1,32 @@
+{
+
+  "user": {
+
+    "ID": "4",
+    "Token": "rjR3mu8uYY7xzU4vtr",
+    "Name": "Henry",
+    "Email": "JohnDo.gmail.com",
+    "lista-main": "lista-main",
+    "date_of_birth": "1990-01-15"
+
+
+  },
+  "lista-main": {
+    "IDlista": "1",
+    "Type": "url",
+    "Date-created": "12-08-14",
+    "Date-tofinish": "12-08-14",
+    "Notes": "La nota final es",
+    "Boolean-notify": "True",
+    "Cuanti-Lista": "4"
+  },
+
+  "message": {
+    "IDMessage": "4",
+    "Title": "12-08-14",
+    "URL": "url.com",
+    "Text": "12-08-14",
+    "Image": "cat.png"
+  }
+
+}
