@@ -5,12 +5,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,30 +36,38 @@ import com.example.projecttodolist.ui.theme.gray
 
 @Composable
 fun ShowTasks() {
-    Box (modifier = Modifier.fillMaxSize().background(gray)){
-
-    }
-    Column (modifier = Modifier
+    Box (modifier = Modifier
         .fillMaxSize()
-        .wrapContentSize(Alignment.TopCenter)
-        .background(gray),
-        verticalArrangement = Arrangement.Center){
-        DrawShape(shape = RectangleShape)
-        Image(
-            painter = painterResource(id = R.drawable.baseline_person_24),
-            contentDescription = "Imagen de perfil")
-        Text(text = "Nombre de usuario",
-            textAlign = TextAlign.Center)
-        Button(
-            onClick = { /* Acción del botón */ },
-            modifier = Modifier
-                .height(56.dp)
-                .clip(RoundedCornerShape(64.dp)) // Cambia el valor para ajustar el radio de las esquinas
-        ) {
-            Text(text = " ")
+        .background(gray)){
+        Column (modifier = Modifier
+            .fillMaxSize()
+            .wrapContentSize(Alignment.TopCenter)
+            .background(gray),
+            verticalArrangement = Arrangement.Center){
+            DrawShape(shape = RectangleShape)
+            Image(
+                painter = painterResource(id = R.drawable.baseline_person_24),
+                contentDescription = "Imagen de perfil")
+            Text(text = "Nombre de usuario",
+                textAlign = TextAlign.Center)
+            Spacer(modifier = Modifier.height(625.dp))
+            Row {
+                Spacer(modifier = Modifier.width(300.dp))
+                Button(
+                    onClick = { /* Acción del botón */ },
+                    modifier = Modifier
+                        .size(60.dp),
+                    shape = CircleShape,
+                    contentPadding = PaddingValues(1.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Add Task",
+                        modifier = Modifier.size(45.dp))
+                }
+            }
         }
     }
-    
 }
 
 @Preview

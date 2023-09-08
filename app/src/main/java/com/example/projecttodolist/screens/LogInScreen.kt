@@ -74,6 +74,7 @@ fun LogInScreen(navController: NavController) {
                     .border(width = 2.dp, blue, RoundedCornerShape(32.dp))
                     .background(blue, shape = RoundedCornerShape(32.dp)),
                 shape = RoundedCornerShape(32.dp),
+                singleLine = true,
                 textStyle = TextStyle(textAlign = TextAlign.Center,
                     fontSize = 21.sp)
             )
