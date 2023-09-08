@@ -1,7 +1,9 @@
 package com.example.projecttodolist.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,12 +23,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.projecttodolist.DrawShape
 import com.example.projecttodolist.R
+import com.example.projecttodolist.ui.theme.gray
 
 @Composable
 fun ShowTasks() {
+    Box (modifier = Modifier.fillMaxSize().background(gray)){
+
+    }
     Column (modifier = Modifier
         .fillMaxSize()
-        .wrapContentSize(Alignment.TopCenter),
+        .wrapContentSize(Alignment.TopCenter)
+        .background(gray),
         verticalArrangement = Arrangement.Center){
         DrawShape(shape = RectangleShape)
         Image(

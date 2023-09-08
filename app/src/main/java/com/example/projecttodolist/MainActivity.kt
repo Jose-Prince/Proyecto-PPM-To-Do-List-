@@ -45,7 +45,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.projecttodolist.Navigation.AppNavigation
 import com.example.projecttodolist.screens.LogInScreen
+import com.example.projecttodolist.ui.theme.JetPackComposeTheme
 import com.example.projecttodolist.ui.theme.ProjectToDoListTheme
+import com.example.projecttodolist.ui.theme.blue
+import com.example.projecttodolist.ui.theme.darkblue
+import com.example.projecttodolist.ui.theme.gray
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,9 +57,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             ProjectToDoListTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                JetPackComposeTheme(
+                    darkTheme = false
                 ) {
                     AppNavigation()
                 }
@@ -73,7 +76,8 @@ fun LoginScreen() {
     val context = LocalContext.current
     Column (modifier = Modifier
         .fillMaxSize()
-        .wrapContentSize(Alignment.TopCenter),
+        .wrapContentSize(Alignment.TopCenter)
+        .background(gray),
         verticalArrangement = Arrangement.Center){
         DrawShape(shape = RectangleShape)
         Spacer(modifier = Modifier.height(125.dp))
@@ -91,8 +95,8 @@ fun LoginScreen() {
                         text = newText
                 },
                 modifier = Modifier
-                    .border(width = 2.dp, color = "#f8a29e".color, RoundedCornerShape(32.dp))
-                    .background(color = "#f8a29e".color, shape = RoundedCornerShape(32.dp)),
+                    .border(width = 2.dp, blue, RoundedCornerShape(32.dp))
+                    .background(blue, shape = RoundedCornerShape(32.dp)),
                 shape = RoundedCornerShape(32.dp),
                 textStyle = TextStyle(textAlign = TextAlign.Center,
                     fontSize = 21.sp)
@@ -114,8 +118,8 @@ fun LoginScreen() {
                         text2 = newText
                 },
                 modifier = Modifier
-                    .border(width = 2.dp, color = "#f8a29e".color, RoundedCornerShape(32.dp))
-                    .background(color = "#f8a29e".color, shape = RoundedCornerShape(32.dp)),
+                    .border(width = 2.dp, blue, RoundedCornerShape(32.dp))
+                    .background(blue, shape = RoundedCornerShape(32.dp)),
                 shape = RoundedCornerShape(32.dp),
                 singleLine = true,
                 textStyle = TextStyle(
@@ -146,7 +150,7 @@ fun LoginScreen() {
             Spacer(modifier = Modifier.width(117.dp))
             Button(
                 onClick = {
-                    },
+                     },
                 //modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(text = "Resgistrarse",
@@ -159,10 +163,12 @@ fun LoginScreen() {
 @Preview(showBackground = true)
 @Composable
 fun MainActivityPreview() {
-    val context = LocalContext.current
-    ProjectToDoListTheme {
-        AppNavigation()
-    }
+        // A surface container using the 'background' color from the theme
+        JetPackComposeTheme(
+            darkTheme = false
+        ) {
+            AppNavigation()
+        }
 }
 
 @Composable
@@ -177,9 +183,6 @@ fun DrawShape(
         Box (modifier = Modifier
             .size(width, height)
             .clip(shape)
-            .background(color = "#f64836".color))
+            .background(darkblue))
     }
 }
-
-val String.color
-    get() = Color(parseColor(this))
