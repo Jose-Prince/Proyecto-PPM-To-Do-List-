@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -27,11 +28,12 @@ import com.example.projecttodolist.ui.theme.gray
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainTaskScreen(){
+fun MainTaskScreen(navController: NavController){
     val navController = rememberNavController()
 
     Box (
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(gray)
     ){
         Scaffold (
@@ -89,5 +91,5 @@ fun RowScope.AddItem(
 @Preview
 @Composable
 fun BarPreview() {
-    MainTaskScreen()
+    MainTaskScreen(navController = rememberNavController())
 }
