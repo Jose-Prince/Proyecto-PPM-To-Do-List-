@@ -4,9 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.projecttodolist.screens.Settings
-import com.example.projecttodolist.screens.ShowTasks
+import com.example.projecttodolist.screens.Show
 
 @Composable
 fun BarNavigation(navController: NavHostController) {
@@ -15,7 +14,7 @@ fun BarNavigation(navController: NavHostController) {
         startDestination = BottomBarScreens.ShowTasks.route,
         ){
             composable(route = BottomBarScreens.ShowTasks.route){
-                ShowTasks()
+                Show(navController)
             }
 
         composable(route = BottomBarScreens.Settings.route){

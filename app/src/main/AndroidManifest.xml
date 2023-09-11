@@ -12,9 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectToDoList"
         tools:targetApi="31">
+        <activity
+            android:name=".Activities.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.ProjectToDoList">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
-            android:name=".CreateActivity"
+            android:name=".Activities.CreateActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ProjectToDoList">

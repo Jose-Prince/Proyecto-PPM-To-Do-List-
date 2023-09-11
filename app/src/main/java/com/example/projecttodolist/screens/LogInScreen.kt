@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.projecttodolist.DrawShape
+import com.example.projecttodolist.Activities.DrawShape
 import com.example.projecttodolist.Navigation.AppScreens
 import com.example.projecttodolist.ui.theme.blue
 import com.example.projecttodolist.ui.theme.gray
@@ -109,7 +109,7 @@ fun LogInScreen(navController: NavController) {
         Row {
             Spacer(modifier = Modifier.width(113.dp))
             Button(onClick = {
-                             navController.navigate(route = AppScreens.TaskScreen.route)
+                             navController.navigate(route = AppScreens.Bar.route)
             },
                 colors = ButtonDefaults.buttonColors(green)
             ) {
@@ -127,7 +127,7 @@ fun LogInScreen(navController: NavController) {
             .align(Alignment.CenterHorizontally)){
             Spacer(modifier = Modifier.width(117.dp))
             Button(
-                onClick = { navController.navigate(route = AppScreens.TaskScreen.route) },
+                onClick = { navController.navigate(route = AppScreens.Bar.route) },
                 colors = ButtonDefaults.buttonColors(green)
             ) {
                 Text(text = "Resgistrarse",

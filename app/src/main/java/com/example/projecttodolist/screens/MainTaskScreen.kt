@@ -1,6 +1,7 @@
 package com.example.projecttodolist.screens
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
@@ -9,10 +10,15 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -21,31 +27,47 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.projecttodolist.Activities.CreateActivity
 import com.example.projecttodolist.Navigation.BarNavigation
 import com.example.projecttodolist.Navigation.BottomBarScreens
 import com.example.projecttodolist.ui.theme.darkblue
 import com.example.projecttodolist.ui.theme.gray
+import kotlinx.coroutines.CoroutineScope
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainTaskScreen(navController: NavController){
     val navController = rememberNavController()
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
 
     Box (
         modifier = Modifier
             .fillMaxSize()
             .background(gray)
     ){
+
         Scaffold (
             bottomBar = { BottomBar(navController = navController)},
-            drawerBackgroundColor = gray,
-            modifier = Modifier.background(Color.Red),
-            drawerContentColor = gray
+            scaffoldState = scaffoldState,
+            floatingActionButton = { fab(navController,scope,scaffoldState)}
         ){
             BarNavigation(navController = navController)
         }
     }
 }
+
+@Composable
+fun fab(navController : NavController,scope : CoroutineScope, scaffoldState: ScaffoldState){
+    val context = LocalContext.current
+    FloatingActionButton(onClick = {
+        val intent = Intent(context, CreateActivity::class.java)
+        context.startActivity(intent)
+    }) {
+
+    }
+}
+
 
 @Composable
 fun BottomBar(navController: NavHostController) {
