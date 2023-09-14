@@ -1,6 +1,7 @@
 package com.example.projecttodolist.Activities
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -77,16 +79,12 @@ fun Create(navController: NavController) {
                     name = newText
             }
         )
-        Text(text = "Ejecución: ")
+
         showDatePicker(context)
 
-
         Text(text = "Hora de inicio:")
-        TextField(
-            value = start,
-            onValueChange = { newText ->
-                if (newText.length <= maxCharacters)
-                    name = newText })
+        showTimePicker()
+
         Text(text = "Descripción: ")
         TextField(
             value = desc,
@@ -130,6 +128,31 @@ fun showDatePicker(context: Context){
     Text(text = "Fecha de ejecución: ")
     TextButton(onClick = { datePickerDialog.show() }) {
         Text(text = buttonText)
+    }
+}
+
+@Composable
+fun showTimePicker() {
+    val mContext = LocalContext.current
+    
+    val calendar = Calendar.getInstance()
+    val hour = calendar[Calendar.HOUR_OF_DAY]
+    val minute = calendar[Calendar.MINUTE]
+    
+    val time = remember { mutableStateOf("") }
+    
+    val timePickerDialog = TimePickerDialog(
+        mContext,
+        {_, hour : Int, minute : Int ->
+            val timeSuffix = if (hour < 12) "AM" else "PM"
+            val formattedHour = if (hour > 12) hour - 12 else hour
+            val formattedMinute = if (minute < 10) "0$minute" else minute
+            time.value = "$formattedHour:$formattedMinute $timeSuffix"
+            }, hour, minute, false
+    )
+    Text(text = "Hora de inicio: ${time.value}")
+    Button(onClick = { timePickerDialog.show() }) {
+        Text(text = "Seleccionar hora")
     }
 }
 
