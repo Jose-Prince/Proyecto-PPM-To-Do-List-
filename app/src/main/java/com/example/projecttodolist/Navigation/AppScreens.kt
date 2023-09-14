@@ -7,5 +7,4 @@ sealed class AppScreens(val route : String) {
     object Bar: AppScreens("task")
     object Create: AppScreens("create")
     object Show: AppScreens("show")
-
 }
