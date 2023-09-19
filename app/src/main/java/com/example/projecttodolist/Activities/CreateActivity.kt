@@ -20,6 +20,7 @@ import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +33,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.projecttodolist.GlobalVariables
+import com.example.projecttodolist.Tarea
+import com.example.projecttodolist.idCreator
 import com.example.projecttodolist.screens.MainTaskScreen
 import java.util.Calendar
 import java.util.Date
@@ -80,10 +84,9 @@ fun Create(navController: NavController) {
             }
         )
 
-        showDatePicker(context)
-
-        Text(text = "Hora de inicio:")
-        showTimePicker()
+        var date = showDatePicker(context)
+        
+        var time = showTimePicker()
 
         Text(text = "Descripción: ")
         TextField(
@@ -91,6 +94,23 @@ fun Create(navController: NavController) {
             onValueChange = { newText ->
                 if (newText.length <= maxCharacters)
                     name = newText })
+        
+        Button(onClick = {
+            var task = Tarea()
+            task.id = idCreator()
+            task.name = name
+            task.date = date
+            task.time = time.toString()
+
+            GlobalVariables.listOfTasks.add(task)
+
+            val intent = Intent(context, MainTaskScreen::class.java)
+            context.startActivity(intent)
+
+
+        }) {
+            Text(text = "Crear")
+        }
     }
 }
 
@@ -102,9 +122,8 @@ fun CreatePrev() {
 }
 
 @Composable
-fun showDatePicker(context: Context){
+fun showDatePicker(context: Context) : String{
     var buttonText by remember { mutableStateOf("??/??/????") }
-    var condition by remember { mutableStateOf(false) }
 
     val year: Int
     val month: Int
@@ -129,10 +148,11 @@ fun showDatePicker(context: Context){
     TextButton(onClick = { datePickerDialog.show() }) {
         Text(text = buttonText)
     }
+    return buttonText
 }
 
 @Composable
-fun showTimePicker() {
+fun showTimePicker(): MutableState<String> {
     val mContext = LocalContext.current
     
     val calendar = Calendar.getInstance()
@@ -154,5 +174,6 @@ fun showTimePicker() {
     Button(onClick = { timePickerDialog.show() }) {
         Text(text = "Seleccionar hora")
     }
+    return time
 }
 
