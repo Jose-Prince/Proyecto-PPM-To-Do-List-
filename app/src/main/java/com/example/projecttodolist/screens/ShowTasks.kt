@@ -32,10 +32,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.projecttodolist.GlobalVariables
+import com.example.projecttodolist.NameAdjust
 import com.example.projecttodolist.ui.theme.blue
 import com.example.projecttodolist.ui.theme.darkblue
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
+import java.text.SimpleDateFormat
+import java.util.jar.Attributes.Name
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,51 +52,58 @@ fun Show(navController: NavController) {
     }
 
     var listTask = GlobalVariables.listOfTasks
+    var listDates = GlobalVariables.listOfDates
+    val formato = SimpleDateFormat("dd/MM/yyyy")
     Column (modifier = Modifier
         .fillMaxSize()
         .background(gray)){
 
-        for (task in listTask){
-            Row {
-                Spacer(modifier = Modifier.width(18.dp))
-                Button(onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .width(300.dp)
-                        .border(
-                            width = 0.dp,
-                            Color.Transparent,
-                            RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)
+        for (date in listDates){
+            Text(text = formato.format(date))
+            for (task in listTask){
+                if (date == formato.parse(task.date)){
+                    Row {
+                        Spacer(modifier = Modifier.width(18.dp))
+                        Button(onClick = { /*TODO*/ },
+                            modifier = Modifier
+                                .width(300.dp)
+                                .border(
+                                    width = 0.dp,
+                                    Color.Transparent,
+                                    RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)
+                                )
+                                .background(blue, shape = RoundedCornerShape(16.dp)),
+                            colors = ButtonDefaults.buttonColors(green),
+                            shape = RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)
+                        ) {
+                            Text(text = NameAdjust(task.name),
+                                fontSize = 24.sp)
+                        }
+                        Divider(
+                            modifier = Modifier
+                                .width(3.dp)
+                                .height(48.dp),
+                            color = Color.Black
                         )
-                        .background(blue, shape = RoundedCornerShape(16.dp)),
-                    colors = ButtonDefaults.buttonColors(green),
-                    shape = RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)
-                ) {
-                    Text(text = task.name,
-                        fontSize = 24.sp)
-                }
-                Divider(
-                    modifier = Modifier
-                        .width(3.dp)
-                        .height(48.dp),
-                    color = Color.Black
-                )
-                IconButton(onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .background(
-                            green,
-                            shape = RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)
-                        )
-                        .border(
-                            width = 0.dp,
-                            Color.Transparent,
-                            RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)
-                        )) {
-                    Icon(imageVector = Icons.Default.Check, contentDescription = null,
-                        modifier = Modifier.size(110.dp),
-                        tint = darkblue)
-                }
+                        IconButton(onClick = { /*TODO*/ },
+                            modifier = Modifier
+                                .background(
+                                    green,
+                                    shape = RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)
+                                )
+                                .border(
+                                    width = 0.dp,
+                                    Color.Transparent,
+                                    RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)
+                                )) {
+                            Icon(imageVector = Icons.Default.Check, contentDescription = null,
+                                modifier = Modifier.size(110.dp),
+                                tint = darkblue)
+                        }
 
-                Spacer(modifier = Modifier.height(30.dp))
+                        Spacer(modifier = Modifier.height(55.dp))
+                    }
+                }
             }
         }
     }

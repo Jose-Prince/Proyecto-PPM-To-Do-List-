@@ -4,7 +4,7 @@ import java.io.OutputStream
 import java.io.OutputStreamWriter
 
 
-@Throws(IOException::class)
+/*@Throws(IOException::class)
 fun writeJsonStream(out: OutputStream?, messages: List<Todo?>) {
     val writer = JsonWriter(OutputStreamWriter(out, "UTF-8"))
     writer.setIndent("  ")
@@ -52,4 +52,4 @@ fun writeDoublesArray(writer: JsonWriter, doubles: List<Double?>) {
         writer.value(value)
     }
     writer.endArray()
-}
+}*/

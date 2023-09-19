@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.projecttodolist.DateOrganizer
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Tarea
 import com.example.projecttodolist.idCreator
@@ -104,9 +105,10 @@ fun Create(navController: NavController) {
 
             GlobalVariables.listOfTasks.add(task)
 
+            DateOrganizer(date)
+
             val intent = Intent(context, MainTaskScreen::class.java)
             context.startActivity(intent)
-
 
         }) {
             Text(text = "Crear")
