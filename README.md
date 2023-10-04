@@ -16,9 +16,8 @@ API Creadas por nosotros Autenticación
 
 
 ## Notificaciones de Eventos
-[Link de Uso de API](https://developers.google.com/calendar?hl=es-419).
 
-- Agregar dependencias para compilar 
+- 
     
 
      
@@ -42,4 +41,18 @@ API Creadas por nosotros Autenticación
      //Instanciar la variable request de Volley
      val queue = Volley.newRequestQueue(this)
      ```
+
+
+## Android X Core Library
+ # Usage
+- Brindar Notificaciones a usuarios cuando hay eventos proximos o si hay un cambio de planificación e incluso si alguien a agregado contenido.
+
+# Pasos 
+
+1. Agregar Dependencias
+    ```ruby
+     implementation("androidx.core:core-ktx:2.2.0")
+     ```
+
+     [Ejemplos de programacion][https://developer.android.com/develop/ui/views/notifications/build-notification] 
 
