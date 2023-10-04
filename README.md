@@ -1,10 +1,43 @@
-#### Proyecto-PPM-To-Do-List-
+# Proyecto To-Do List
 
-### **Servicios** 
+## API To-Do List
+API para la gestión de tareas a travez de To-Do List backend 
 
-## Api Creada por nosotros
-API Creadas por nosotros Autenticación
- - 
+### Get Tasks
+
+**Endpoint** ```/v1/tasks/:status/```
+**Method** GET
+**Path variables** 
+|Variable|Valores|
+|---|---|
+|status|pending, done, cancelled|
+
+**Description**
+Obtene la lista de tareas vinculadas a un usuario.
+
+**Schema Response**
+```
+{
+    sucess: true,
+    response: [
+        {
+            id: 1,
+            title: Example task number 1,
+            status: pending
+        },
+        {
+            id: 2,
+            title: Example task number 2,
+            status: pending
+        },
+        {
+            id: 3,
+            title: Example task number 3,
+            status: cancelled
+        },
+    ]
+}
+```
 
 ## API QRGen
 - Agregar en Dependencias 
@@ -18,10 +51,6 @@ API Creadas por nosotros Autenticación
 ## Notificaciones de Eventos
 
 - 
-    
-
-     
-
 
 ### **Librerías**
 
