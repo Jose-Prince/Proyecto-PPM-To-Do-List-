@@ -5,15 +5,25 @@ API para la gestión de tareas a travez de To-Do List backend
 
 ### Get Tasks
 
-**Endpoint** ```/v1/tasks/:status/```
-**Method** GET
-**Path variables** 
-|Variable|Valores|
+**Endpoint** ```/v1/tasks/:status/```  
+
+**Method** GET  
+
+**Path variables**  
+|Variable|Value|
 |---|---|
 |status|pending, done, cancelled|
 
 **Description**
-Obtene la lista de tareas vinculadas a un usuario.
+Obtiene la lista de tareas vinculadas a un usuario.
+
+**Headers**
+```
+{
+    contentType: "application/json",
+    Authorization: "Bearer {{auth_token}}"
+}
+```
 
 **Schema Response**
 ```
@@ -36,6 +46,40 @@ Obtene la lista de tareas vinculadas a un usuario.
             status: cancelled
         },
     ]
+}
+```
+
+### Get Tasks
+
+**Endpoint** ```/v1/security/authentication/login/```  
+**Method** POST  
+
+**Description**
+Método de autenticación de usuarios para habilitar el uso los recursos privados del API, verifica las credenciales del usuario mediante el tipo de autenticación y retorna un auth_token con expiración de 1 hora.  
+
+**Headers**
+```
+{
+    contentType: "application/json",
+}
+```
+
+**Schema Request**
+```
+{
+    authenticationType: "EmailAndPassword", // oAuth, SSO, EmailAndPassword, API key
+    username: "MyUserName",
+    password: "MyPassword"
+}
+```
+
+**Schema Response**
+```
+{
+    sucess: true,
+    response: {
+        authToken: {{token_hash}} 
+    }
 }
 ```
 
