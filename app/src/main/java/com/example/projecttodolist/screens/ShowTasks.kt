@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DismissDirection
@@ -44,6 +45,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -84,7 +86,6 @@ import java.text.SimpleDateFormat
 import java.util.jar.Attributes.Name
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun Show(taskViewModel : TaskViewModel = viewModel()) {
 
@@ -107,9 +108,12 @@ fun Show(taskViewModel : TaskViewModel = viewModel()) {
                 itemsIndexed(
                     items = tasks,
                     key = { _, item -> item.hashCode() }
-                ) { _, taskContent ->
+                ) { index, taskContent ->
                     TaskItem(taskContent,
                         onRemove = taskViewModel::removeItem)
+                    if (index < tasks.size - 1) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                 }
             }
         }
@@ -157,10 +161,13 @@ fun DismissBackground(dismissState : DismissState) {
 @Composable
 fun TaskCard(task : Tarea) {
     androidx.compose.material3.ListItem(
-        modifier = Modifier.clip(MaterialTheme.shapes.small),
+        modifier = Modifier
+            .clip(MaterialTheme.shapes.small)
+            .border(3.dp, green),
         headlineText = { Text(
             text = NameAdjust(task.name),
             style = MaterialTheme.typography.titleMedium)},
+        colors = ListItemDefaults.colors(gray),
         supportingText = {
             Text(text = task.date,
                 style = MaterialTheme.typography.bodySmall)
