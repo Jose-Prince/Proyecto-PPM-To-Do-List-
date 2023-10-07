@@ -14,7 +14,7 @@ fun BarNavigation(navController: NavHostController) {
         startDestination = BottomBarScreens.ShowTasks.route,
         ){
             composable(route = BottomBarScreens.ShowTasks.route){
-                Show(navController)
+                Show()
             }
 
         composable(route = BottomBarScreens.Settings.route){

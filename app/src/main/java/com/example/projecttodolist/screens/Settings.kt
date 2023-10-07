@@ -37,12 +37,6 @@ fun Settings() {
     Column(modifier = Modifier
         .background(gray)
         .fillMaxSize()) {
-        DrawShape(shape = RectangleShape)
-        Image(
-            painter = painterResource(id = R.drawable.baseline_person_24),
-            contentDescription = "Imagen de perfil")
-        Text(text = "Nombre de usuario",
-            textAlign = TextAlign.Center)
         Row{
             Text(text = "Nombre:")
             Text(text = "Apellido:")

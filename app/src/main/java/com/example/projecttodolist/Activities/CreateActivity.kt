@@ -38,6 +38,9 @@ import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Tarea
 import com.example.projecttodolist.idCreator
 import com.example.projecttodolist.screens.MainTaskScreen
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 
@@ -53,7 +56,6 @@ class CreateActivity : ComponentActivity() {
 @Composable
 fun Create(navController: NavController) {
     var name by remember { mutableStateOf("") }
-    var start by remember { mutableStateOf("") }
     var desc by remember { mutableStateOf("") }
     var maxCharacters : Int = 36
     val context = LocalContext.current
@@ -97,11 +99,7 @@ fun Create(navController: NavController) {
                     name = newText })
         
         Button(onClick = {
-            var task = Tarea()
-            task.id = idCreator()
-            task.name = name
-            task.date = date
-            task.time = time.toString()
+            var task = Tarea(idCreator(),name,date,time.toString())
 
             GlobalVariables.listOfTasks.add(task)
 
@@ -125,7 +123,10 @@ fun CreatePrev() {
 
 @Composable
 fun showDatePicker(context: Context) : String{
-    var buttonText by remember { mutableStateOf("??/??/????") }
+    val formato = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    val currentDate = LocalDate.now()
+
+    var buttonText by remember { mutableStateOf(currentDate.format(formato)) }
 
     val year: Int
     val month: Int
