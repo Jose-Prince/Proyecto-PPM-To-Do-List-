@@ -142,7 +142,7 @@ fun showDatePicker(context: Context) : String{
     val datePickerDialog = DatePickerDialog(
         context,
         {_: DatePicker, year : Int, month : Int, dayOfMonth : Int ->
-            date.value = "$dayOfMonth/$month/$year"
+            date.value = "$dayOfMonth/${month + 1}/$year"
             buttonText = date.value
         }, year, month, day
     )
@@ -177,6 +177,7 @@ fun showTimePicker(): MutableState<String> {
     Button(onClick = { timePickerDialog.show() }) {
         Text(text = "Seleccionar hora")
     }
+    System.out.println(GlobalVariables.listOfTasks)
     return time
 }
 

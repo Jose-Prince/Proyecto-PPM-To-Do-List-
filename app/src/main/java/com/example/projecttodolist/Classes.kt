@@ -1,7 +1,6 @@
 package com.example.projecttodolist
 
-import java.time.LocalDate
-import kotlin.random.Random
+import java.util.Date
 
 
 data class Tarea(

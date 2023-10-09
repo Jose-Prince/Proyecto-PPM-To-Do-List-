@@ -48,6 +48,7 @@ import com.example.projecttodolist.Activities.DrawShape
 import com.example.projecttodolist.Navigation.BarNavigation
 import com.example.projecttodolist.Navigation.BottomBarScreens
 import com.example.projecttodolist.R
+import com.example.projecttodolist.TaskViewModel
 import com.example.projecttodolist.ui.theme.blue
 import com.example.projecttodolist.ui.theme.darkblue
 import com.example.projecttodolist.ui.theme.gray
@@ -104,6 +105,7 @@ fun Fab(navController : NavController,scope : CoroutineScope, scaffoldState: Sca
     FloatingActionButton(onClick = {
         val intent = Intent(context, CreateActivity::class.java)
         context.startActivity(intent)
+        TaskViewModel::refresh
     },
         containerColor = green,
         modifier = Modifier.size(60.dp),
@@ -150,7 +152,8 @@ fun RowScope.AddItem(
         selected = currentDestination?.hierarchy?.any {
               it.route == screen.route
         } == true,
-        onClick = { navController.navigate(screen.route) },
+        onClick = { navController.navigate(screen.route)
+                  TaskViewModel::refresh},
         icon = {
             Icon(
                 painter = painterResource(id = screen.icon),

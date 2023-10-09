@@ -11,19 +11,24 @@ class TaskViewModel : ViewModel() {
     val taskState : StateFlow<List<Tarea>> = _taskState.asStateFlow()
 
     init {
-        _taskState.update { GlobalVariables.listOfTasks }
+        _taskState.update { allTasks() }
     }
 
     fun refresh() {
-        _taskState.update { GlobalVariables.listOfTasks }
+        _taskState.update { allTasks() }
     }
 
     fun removeItem(currentItem: Tarea) {
         _taskState.update {
             val mutableList = it.toMutableList()
             mutableList.remove(currentItem)
-            GlobalVariables.listOfTasks.remove(currentItem)
             mutableList
         }
+        updateGlobalTasks(_taskState.value)
+    }
+    private fun allTasks() = GlobalVariables.listOfTasks
+
+    private fun updateGlobalTasks(tasks: List<Tarea>){
+        GlobalVariables.listOfTasks = tasks.toMutableList() as ArrayList<Tarea>
     }
 }
