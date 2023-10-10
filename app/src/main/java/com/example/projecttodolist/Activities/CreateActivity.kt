@@ -36,9 +36,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.projecttodolist.DateOrganizer
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Tarea
-import com.example.projecttodolist.idCreator
+import com.example.projecttodolist.TaskByDate
+import com.example.projecttodolist.durationCalc
 import com.example.projecttodolist.screens.MainTaskScreen
-import java.text.SimpleDateFormat
+import com.example.projecttodolist.screens.TaskCard
+import com.example.projecttodolist.tyoeAssignation
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -86,10 +88,13 @@ fun Create(navController: NavController) {
                     name = newText
             }
         )
-
-        var date = showDatePicker(context)
-        
+        Text(text = "Fecha de inicio: ")
+        var dateI = showDatePicker(context)
+        Text(text = "Fecha de fin: ")
+        var dateF = showDatePicker(context)
         var time = showTimePicker()
+
+        val duration = durationCalc(dateI,dateF)
 
         Text(text = "Descripción: ")
         TextField(
@@ -99,11 +104,12 @@ fun Create(navController: NavController) {
                     name = newText })
         
         Button(onClick = {
-            var task = Tarea(idCreator(),name,date,time.toString())
+            var task = Tarea(tyoeAssignation(GlobalVariables.taskType),name,dateI, dateF,time.toString(),duration)
 
-            GlobalVariables.listOfTasks.add(task)
+            TaskByDate(task)
 
-            DateOrganizer(date)
+            DateOrganizer(dateI)
+
 
             val intent = Intent(context, MainTaskScreen::class.java)
             context.startActivity(intent)
@@ -147,7 +153,6 @@ fun showDatePicker(context: Context) : String{
         }, year, month, day
     )
 
-    Text(text = "Fecha de ejecución: ")
     TextButton(onClick = { datePickerDialog.show() }) {
         Text(text = buttonText)
     }

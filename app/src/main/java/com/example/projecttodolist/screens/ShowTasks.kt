@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissState
 import androidx.compose.material.DismissValue
@@ -55,28 +55,31 @@ import com.example.projecttodolist.TaskViewModel
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
 import kotlinx.coroutines.delay
-import java.text.SimpleDateFormat
+import java.nio.file.WatchEvent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun Show(taskViewModel : TaskViewModel = viewModel()) {
+    GlobalVariables.taskType = true
+
+    val scrollState = rememberLazyListState()
 
     val tasks by taskViewModel.taskState.collectAsState()
-    val tasksByDate: Map<String, List<Tarea>> = tasks.groupBy { it.date }
+    val tasksByDate: Map<String, List<Tarea>> = tasks.groupBy { it.dateI }
     val items = tasksByDate.flatMap { (date, tasksForDate) ->
         listOf(date) + tasksForDate
     }
 
     MaterialTheme {
-        androidx.compose.material.Scaffold (backgroundColor = gray){
+        androidx.compose.material.Scaffold (backgroundColor = gray, modifier = Modifier.padding(bottom = 50.dp).padding(horizontal = 5.dp).fillMaxSize()){
                 paddingValues ->
-            LazyColumn(modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize(),
+            LazyColumn(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize(),
                 contentPadding = PaddingValues(vertical = 12.dp),
-
-                ){
-                val sortedTasks = tasks.sortedByDescending { SimpleDateFormat("dd/MM/yyyy").parse(it.date) }
+                state = scrollState,
+            ){
 
                 itemsIndexed(
                     items = items,
@@ -147,7 +150,7 @@ fun TaskCard(task : Tarea) {
             style = MaterialTheme.typography.titleMedium)},
         colors = ListItemDefaults.colors(gray),
         supportingText = {
-            Text(text = task.date,
+            Text(text = "Tarea ${task.type}      duración: ${task.duration}",
                 style = MaterialTheme.typography.bodySmall)
         }
     )

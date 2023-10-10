@@ -1,11 +1,10 @@
 package com.example.projecttodolist
 
-import java.util.Date
-
-
 data class Tarea(
-    var id : String,
+    var type : String,
     var name : String,
-    var date : String,
-    var time : String
+    var dateI : String,
+    var dateF : String,
+    var time : String,
+    var duration : Long
 )

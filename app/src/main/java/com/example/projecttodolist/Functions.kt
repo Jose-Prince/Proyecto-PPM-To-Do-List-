@@ -21,25 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.Calendar
 import java.util.Date
 import kotlin.random.Random
-
-fun idCreator(): String{
-    val banco : String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-
-    var string : String = ""
-    for (x in 0 until 8) {
-        val randomIndex = numeroAleatorioEnRango(0, banco.length - 1)
-        val randomChar = banco[randomIndex]
-        string += randomChar
-    }
-    return string
-}
-
-fun numeroAleatorioEnRango(min: Int, max: Int) : Int {
-    return Random.nextInt(min, max + 1)
-}
 
 fun DateOrganizer(date : String) {
     var i : Int = 0
@@ -65,11 +52,42 @@ fun DateOrganizer(date : String) {
 }
 
 fun NameAdjust(name : String) : String {
-    if (name.length > 12) {
-        var nombre = name.substring(0..11) + "..."
+    if (name.length > 30) {
+        var nombre = name.substring(0..29) + "..."
         return nombre
     } else {
         return name
     }
 }
 
+fun tyoeAssignation(type : Boolean) : String{
+    if (type) {
+        return "Personal"
+    } else {
+        return "Grupal"
+    }
+}
+
+fun durationCalc(dateI : String, dateF : String): Long {
+    val formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+
+    val fechaI = LocalDate.parse(dateI, formatoFecha)
+    val fechaF = LocalDate.parse(dateF, formatoFecha)
+
+    val duration = ChronoUnit.DAYS.between(fechaI, fechaF) + 1
+
+    return duration
+}
+
+fun TaskByDate(task : Tarea) {
+    GlobalVariables.listOfTasks.add(task)
+
+    val formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    val initialDate = LocalDate.parse(task.dateI, formatoFecha)
+
+    if (task.dateI != task.dateF) {
+        val nextDay = initialDate.plusDays(1)
+        var newTask = Tarea(task.type, task.name, formatoFecha.format(nextDay), task.dateF, task.time, task.duration)
+        TaskByDate(newTask)
+    }
+}

@@ -18,4 +18,9 @@ sealed class BottomBarScreens(
         title = "Settings",
         icon = R.drawable.baseline_more_vert_24
     )
+    object Calendar: BottomBarScreens(
+        route = "calendar",
+        title = "Calendar",
+        icon = R.drawable.baseline_calendar_today_24
+    )
 }

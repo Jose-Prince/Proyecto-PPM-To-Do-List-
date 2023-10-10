@@ -45,6 +45,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.projecttodolist.Activities.Create
 import com.example.projecttodolist.Activities.CreateActivity
 import com.example.projecttodolist.Activities.DrawShape
+import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Navigation.BarNavigation
 import com.example.projecttodolist.Navigation.BottomBarScreens
 import com.example.projecttodolist.R
@@ -79,7 +80,7 @@ fun MainTaskScreen(navController: NavController){
     ){
 
         Scaffold (
-            topBar = { Column (horizontalAlignment = Alignment.CenterHorizontally){
+            topBar = {if (GlobalVariables.showTopBar){ Column (horizontalAlignment = Alignment.CenterHorizontally){
                 DrawShape(shape = RectangleShape)
                 Spacer(modifier = Modifier.size(15.dp))
                 Image(
@@ -88,10 +89,12 @@ fun MainTaskScreen(navController: NavController){
                     modifier = Modifier.size(60.dp))
                 Text(text = "Nombre de usuario",
                     fontSize = 35.sp)
-            }},
+            }}},
             bottomBar = { BottomBar(navController = navController)},
             scaffoldState = scaffoldState,
-            floatingActionButton = { Fab(navController,scope,scaffoldState) },
+            floatingActionButton = { if (GlobalVariables.showFloatingButton) {
+                Fab(navController,scope,scaffoldState)
+            } },
             backgroundColor = gray
         ){
             BarNavigation(navController = navController)
@@ -124,6 +127,7 @@ fun Fab(navController : NavController,scope : CoroutineScope, scaffoldState: Sca
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarScreens.ShowTasks,
+        BottomBarScreens.Calendar,
         BottomBarScreens.Settings
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()

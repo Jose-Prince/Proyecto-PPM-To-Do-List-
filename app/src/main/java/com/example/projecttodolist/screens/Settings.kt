@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.projecttodolist.Activities.DrawShape
+import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.R
 import com.example.projecttodolist.ui.theme.darkblue
 import com.example.projecttodolist.ui.theme.gray
@@ -30,6 +31,7 @@ import com.example.projecttodolist.ui.theme.gray
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Settings() {
+
     var nombre by remember { mutableStateOf("")}
     var apellido by remember { mutableStateOf("")}
     var edad by remember { mutableStateOf("")}
