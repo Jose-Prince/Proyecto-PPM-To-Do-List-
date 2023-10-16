@@ -1,4 +1,4 @@
-package com.example.projecttodolist
+package com.example.projecttodolist.Functions
 
 import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
@@ -20,6 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.projecttodolist.GlobalVariables
+import com.example.projecttodolist.Tarea
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -60,7 +62,7 @@ fun NameAdjust(name : String) : String {
     }
 }
 
-fun tyoeAssignation(type : Boolean) : String{
+fun typeAssignation(type : Boolean) : String{
     if (type) {
         return "Personal"
     } else {
@@ -87,7 +89,7 @@ fun TaskByDate(task : Tarea) {
 
     if (task.dateI != task.dateF) {
         val nextDay = initialDate.plusDays(1)
-        var newTask = Tarea(task.type, task.name, formatoFecha.format(nextDay), task.dateF, task.time, task.duration)
+        var newTask = Tarea(task.type, task.name, formatoFecha.format(nextDay), task.dateF, task.timeI, task.timeF, task.duration)
         TaskByDate(newTask)
     }
 }

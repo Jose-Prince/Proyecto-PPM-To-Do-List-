@@ -5,6 +5,7 @@ data class Tarea(
     var name : String,
     var dateI : String,
     var dateF : String,
-    var time : String,
+    var timeI : String,
+    var timeF : String,
     var duration : Long
 )
