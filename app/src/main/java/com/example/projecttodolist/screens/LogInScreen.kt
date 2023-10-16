@@ -35,15 +35,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-<<<<<<< HEAD
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.projecttodolist.Activities.DrawShape
-=======
 import com.example.projecttodolist.Functions.*
->>>>>>> 02c91cbe067d4de2173b40c801f814a9c5c1ca63
 import com.example.projecttodolist.Navigation.AppScreens
 import com.example.projecttodolist.ui.theme.blue
 import com.example.projecttodolist.ui.theme.gray
@@ -120,7 +116,7 @@ fun LogInScreen(navController: NavController) {
         Row {
             Spacer(modifier = Modifier.width(113.dp))
             Button(onClick = {
-                             navController.navigate(route = AppScreens.Bar.route)
+                navController.navigate(route = AppScreens.Bar.route)
             },
                 colors = ButtonDefaults.buttonColors(green)
             ) {
