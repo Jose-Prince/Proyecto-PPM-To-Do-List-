@@ -48,14 +48,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.example.projecttodolist.Functions.*
 import com.example.projecttodolist.GlobalVariables
-import com.example.projecttodolist.NameAdjust
 import com.example.projecttodolist.Tarea
 import com.example.projecttodolist.TaskViewModel
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
 import kotlinx.coroutines.delay
-import java.nio.file.WatchEvent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

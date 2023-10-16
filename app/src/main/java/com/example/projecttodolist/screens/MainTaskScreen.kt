@@ -42,15 +42,13 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.projecttodolist.Activities.Create
 import com.example.projecttodolist.Activities.CreateActivity
-import com.example.projecttodolist.Activities.DrawShape
+import com.example.projecttodolist.Functions.*
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Navigation.BarNavigation
 import com.example.projecttodolist.Navigation.BottomBarScreens
 import com.example.projecttodolist.R
 import com.example.projecttodolist.TaskViewModel
-import com.example.projecttodolist.ui.theme.blue
 import com.example.projecttodolist.ui.theme.darkblue
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
@@ -93,7 +91,7 @@ fun MainTaskScreen(navController: NavController){
             bottomBar = { BottomBar(navController = navController)},
             scaffoldState = scaffoldState,
             floatingActionButton = { if (GlobalVariables.showFloatingButton) {
-                Fab(navController,scope,scaffoldState)
+                FabAdd(navController,scope,scaffoldState)
             } },
             backgroundColor = gray
         ){
@@ -103,12 +101,11 @@ fun MainTaskScreen(navController: NavController){
 }
 
 @Composable
-fun Fab(navController : NavController,scope : CoroutineScope, scaffoldState: ScaffoldState){
+fun FabAdd(navController : NavController,scope : CoroutineScope, scaffoldState: ScaffoldState){
     val context = LocalContext.current
     FloatingActionButton(onClick = {
         val intent = Intent(context, CreateActivity::class.java)
         context.startActivity(intent)
-        TaskViewModel::refresh
     },
         containerColor = green,
         modifier = Modifier.size(60.dp),

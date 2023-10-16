@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.projecttodolist.Activities.DrawShape
+import com.example.projecttodolist.Functions.*
 import com.example.projecttodolist.Navigation.AppScreens
 import com.example.projecttodolist.ui.theme.blue
 import com.example.projecttodolist.ui.theme.gray
