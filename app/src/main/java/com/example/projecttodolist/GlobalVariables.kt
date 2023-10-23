@@ -12,4 +12,6 @@ object GlobalVariables {
     var showTopBar by mutableStateOf(true)
     var showFloatingButton by mutableStateOf(true)
     var taskType by mutableStateOf(false)
+    var year by mutableStateOf(LocalDate.now().year)
+    var month by mutableStateOf(LocalDate.now().monthValue - 1)
 }

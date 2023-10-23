@@ -93,3 +93,11 @@ fun TaskByDate(task : Tarea) {
         TaskByDate(newTask)
     }
 }
+
+fun Euclides(mes : Int) : Int {
+    if (mes >= 0) {
+        return mes
+    } else {
+        return mes + 12
+    }
+}
