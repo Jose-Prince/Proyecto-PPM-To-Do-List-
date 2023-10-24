@@ -111,7 +111,9 @@ fun Create(navController: NavController) {
             duration = durationCalc(dateI, dateF)
 
             var task = Tarea(typeAssignation(GlobalVariables.taskType),name.text, dateI, dateF,timeI,timeF,duration)
-            //TaskByDate(task)
+            GlobalVariables.listOfTasks.add(task)
+            TaskByDate(task)
+            organizeTaskInMap(GlobalVariables.listWithAllDates, GlobalVariables.MapTaskDates)
             val intent = Intent(context, MainTaskScreen::class.java)
             context.startActivity(intent)
         }

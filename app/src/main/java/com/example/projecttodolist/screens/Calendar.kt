@@ -43,12 +43,12 @@ import com.example.projecttodolist.Functions.Euclides
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Month
 import com.example.projecttodolist.ui.theme.gray
+import com.example.projecttodolist.ui.theme.green
 
 @Composable
 fun Calendar() {
     val meses = listOf<String>("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre")
     var i by remember { mutableIntStateOf(0) }
-    var e by remember { mutableIntStateOf(1) }
     var mes by remember { mutableStateOf(Month(meses[(GlobalVariables.month + i)%12],GlobalVariables.year + i))}
     Box (modifier = Modifier
         .fillMaxSize()
@@ -59,7 +59,7 @@ fun Calendar() {
         }
     }
     Column (modifier = Modifier.fillMaxWidth()){
-        Row (modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center){
+        Row (modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween){
             IconButton(onClick = { i--
                 GlobalVariables.month--
                 if (Euclides(GlobalVariables.month % 12) == 11) {
@@ -113,7 +113,12 @@ fun Calendar() {
                                 .background(gray)
                                 .height(70.dp),
                             shape = RectangleShape,
-                            colors = ButtonDefaults.buttonColors(gray)
+                            colors =
+                            if (GlobalVariables.MapTaskDates["${item - daysOfWeek.indexOf(mes.initialDay)}/${mes.monthNumber}/${mes.year}"] != null) {
+                                ButtonDefaults.buttonColors(green)
+                            } else {
+                                ButtonDefaults.buttonColors(gray)
+                            }
                         ) {
                             Text(text = "${item - daysOfWeek.indexOf(mes.initialDay)}",
                                 fontSize = 17.sp)

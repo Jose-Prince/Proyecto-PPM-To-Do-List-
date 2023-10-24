@@ -35,7 +35,7 @@ fun durationCalc(dateI : String, dateF : String): Long {
 }
 
 fun TaskByDate(task : Tarea) {
-    GlobalVariables.listOfTasks.add(task)
+    GlobalVariables.listWithAllDates.add(task)
 
     val formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     val initialDate = LocalDate.parse(task.dateI, formatoFecha)
@@ -53,4 +53,19 @@ fun Euclides(mes : Int) : Int {
     } else {
         return mes + 12
     }
+}
+
+fun organizeTaskInMap(listOfDates: ArrayList<Tarea>, map: MutableMap<String, ArrayList<Tarea>>) {
+    for (tarea in listOfDates){
+        val taskDateI = tarea.dateI
+        val taskList = map[taskDateI]
+
+        if (taskList == null) {
+            val newTaskList = arrayListOf(tarea)
+            map[taskDateI] = newTaskList
+        } else {
+            taskList.add(tarea)
+        }
+    }
+    listOfDates.clear()
 }
