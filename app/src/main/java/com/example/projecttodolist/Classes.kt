@@ -17,7 +17,6 @@ data class Tarea(
 data class Month(
     var name: String,
     var year: Int,
-    var i: Int
 ) {
     var numOfDays: Int = when (name) {
         "Enero" -> 31

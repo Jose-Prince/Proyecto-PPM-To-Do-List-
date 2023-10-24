@@ -8,7 +8,8 @@ import java.util.Date
 
 object GlobalVariables {
     var listOfTasks = ArrayList<Tarea>()
-    var listOfDates = ArrayList<Date>()
+    var MapTaskDates : Map<String, ArrayList<Tarea>> = mutableMapOf()
+    var MaoTaskHours : Map<String, Map<String, ArrayList<Tarea>>> = mutableMapOf()
     var showTopBar by mutableStateOf(true)
     var showFloatingButton by mutableStateOf(true)
     var taskType by mutableStateOf(false)

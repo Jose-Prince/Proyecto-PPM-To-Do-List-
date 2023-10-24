@@ -64,7 +64,7 @@ fun Show(taskViewModel : TaskViewModel = viewModel()) {
     val scrollState = rememberLazyListState()
 
     val tasks by taskViewModel.taskState.collectAsState()
-    val tasksByDate: Map<String, List<Tarea>> = tasks.groupBy { it.dateI }
+    val tasksByDate: Map<String, List<Tarea>> = tasks.groupBy { it.dateF }
     val items = tasksByDate.flatMap { (date, tasksForDate) ->
         listOf(date) + tasksForDate
     }
@@ -183,7 +183,11 @@ fun TaskItem(task: Tarea, onRemove: (Tarea) -> Unit) {
         if (!show) {
             delay(800)
             onRemove(currentItem)
-            Toast.makeText(context, "Item removed", Toast.LENGTH_SHORT).show()
-        }
+            val message = when (dismissState.dismissDirection) {
+                DismissDirection.StartToEnd -> "Tarea eliminada"
+                DismissDirection.EndToStart -> "Tarea completada"
+                else -> "Item removed"
+            }
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()        }
     }
 }

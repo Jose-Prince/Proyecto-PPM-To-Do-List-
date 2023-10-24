@@ -85,6 +85,7 @@ fun Create(navController: NavController) {
     var name by remember { mutableStateOf(TextFieldValue("")) }
     var desc by remember { mutableStateOf("") }
     val checkedState = remember { mutableStateOf(false)}
+    var error by remember { mutableStateOf(false) }
     var height : Int = 100
     var dateI = ""
     var dateF = ""
@@ -101,16 +102,19 @@ fun Create(navController: NavController) {
     val scope = rememberCoroutineScope()
 
     val onClickAction = {
-        if (dateI > dateF){
-            dateF = dateI
-        }
-        duration = durationCalc(dateI, dateF)
+        if (name.text.isBlank()){
+            error = true
+        } else {
+            if (dateI > dateF){
+                dateF = dateI
+            }
+            duration = durationCalc(dateI, dateF)
 
-        var task = Tarea(typeAssignation(GlobalVariables.taskType),name.text, dateI, dateF,timeI,timeF,duration)
-        TaskByDate(task)
-        //DateOrganizer(dateI)
-        val intent = Intent(context, MainTaskScreen::class.java)
-        context.startActivity(intent)
+            var task = Tarea(typeAssignation(GlobalVariables.taskType),name.text, dateI, dateF,timeI,timeF,duration)
+            //TaskByDate(task)
+            val intent = Intent(context, MainTaskScreen::class.java)
+            context.startActivity(intent)
+        }
     }
 
     Box (modifier = Modifier
@@ -144,7 +148,7 @@ fun Create(navController: NavController) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .border(1.dp, Color.Transparent),
+                .border(1.dp, if (error) Color.Red else Color.Transparent),
             textStyle = TextStyle(
                 color = Color.Black,  // Color del texto ingresado
                 fontSize = 23.sp     // Tamaño del texto ingresado
@@ -161,7 +165,11 @@ fun Create(navController: NavController) {
                 cursorColor = darkblue  // Color del cursor cuando se ingresa texto
             )
         )
-
+        if (error) {
+            Text(text = "Debe ingresar un título para la tarea",
+                style = TextStyle(color = Color.Red)
+            )
+        }
         Divider(modifier = Modifier.fillMaxWidth(),
             color = blue)
 
