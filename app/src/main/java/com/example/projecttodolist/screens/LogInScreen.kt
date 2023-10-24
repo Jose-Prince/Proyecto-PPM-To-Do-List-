@@ -41,6 +41,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.projecttodolist.Functions.*
 import com.example.projecttodolist.Navigation.AppScreens
+import com.example.projecttodolist.connect.loginrequest
 import com.example.projecttodolist.ui.theme.blue
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
@@ -53,7 +54,8 @@ fun LogInScreen(navController: NavController) {
     var text2 by remember { mutableStateOf("") }
     var maxCharacters : Int = 36
     Box (
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(gray)
     ){
 
@@ -116,7 +118,12 @@ fun LogInScreen(navController: NavController) {
         Row {
             Spacer(modifier = Modifier.width(113.dp))
             Button(onClick = {
-                navController.navigate(route = AppScreens.Bar.route)
+                val token = "loginrequest(user =text , password =text2 )"
+                if ( token != ""){
+
+                    navController.navigate("AppScreens.Bar.route/$token")
+                }
+
             },
                 colors = ButtonDefaults.buttonColors(green)
             ) {
@@ -150,23 +157,3 @@ fun LogInPrev() {
     val navController = rememberNavController()
     LogInScreen(navController = navController)
 }
-@Composable //Agregue el composable
-fun loginrequest() {
-    val urllink = "http://10.0.2.2:8085/datatodo/mostrardatos.php" //Utilizado SOLAMENTE CON EMULADOR
-    val queue: RequestQueue = Volley.newRequestQueue(LocalContext.current) //En caso de emergencia el cambio fue de LocalContext.current
-
-
-    val request = StringRequest(
-        Request.Method.GET,urllink,
-        { response ->
-
-            val data = JSONArray(response).toString()
-
-            Log.e("Objects",data)
-
-
-        },
-        { Log.e("Objects","sin conex") })
-    queue.add(request)
-}
-

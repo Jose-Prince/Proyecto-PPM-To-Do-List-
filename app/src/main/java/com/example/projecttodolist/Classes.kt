@@ -13,6 +13,26 @@ data class Tarea(
     var timeF : String,
     var duration : Long
 )
+data class UserData(
+    val Username: String,
+    val Password: String,
+    val Email: String,
+    val DateCreated: String,
+    val Arraytodo:Array<String>,
+    val Age: Int,
+    val Settings: Array<String>,
+    val token: String
+)
+
+data class tareadata(
+    val TimeCreated: String,
+    val Title:String,
+    val Descriprion: String,
+    val Type: String,
+    val Status: Int,
+    val TimeFinished:String,
+    val QrCode: String
+)
 
 data class Month(
     var name: String,

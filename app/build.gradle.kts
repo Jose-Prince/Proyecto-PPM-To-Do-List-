@@ -72,5 +72,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("androidx.navigation:navigation-compose:2.7.1")
     implementation("com.android.volley:volley:1.2.1")
+    implementation("io.jsonwebtoken:jjwt:0.7.0")
 
 }
