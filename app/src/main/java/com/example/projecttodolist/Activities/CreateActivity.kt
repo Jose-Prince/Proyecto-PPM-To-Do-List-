@@ -35,7 +35,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -203,7 +202,7 @@ fun Create(navController: NavController) {
         Row(modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center) {
             Column (horizontalAlignment = Alignment.CenterHorizontally){
-                dateI = showDatePickerI(context, fechaF, fechaI)
+                dateI = showDatePickerI(context, fechaF)
                 if (!checkedState.value)
                     timeI = showTimePicker()
             }
@@ -217,7 +216,7 @@ fun Create(navController: NavController) {
                 color = blue)
             Spacer(modifier = Modifier.width(30.dp))
             Column (horizontalAlignment = Alignment.CenterHorizontally){
-                dateF = showDatePickerF(context, fechaF, fechaI)
+                dateF = showDatePickerF(context, fechaF)
                 if (!checkedState.value) {
                     timeF = showTimePicker()
                 }
@@ -271,9 +270,13 @@ fun CreatePrev() {
 }
 
 @Composable
-fun showDatePickerI(context: Context, fechaF: MutableState<String>, fechaI: MutableState<LocalDate>) : String{
+fun showDatePickerI(context: Context, fechaF: MutableState<String>) : String{
     val formato = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     var currentDate = LocalDate.now()
+
+    if (fechaF.value.length == 9){
+        fechaF.value = "0${fechaF.value}"
+    }
 
     var buttonText by remember { mutableStateOf(currentDate.format(formato)) }
 
@@ -291,7 +294,11 @@ fun showDatePickerI(context: Context, fechaF: MutableState<String>, fechaI: Muta
     val datePickerDialog = DatePickerDialog(
         context,
         {_: DatePicker, year : Int, month : Int, dayOfMonth : Int ->
-            date.value = "$dayOfMonth/${month + 1}/$year"
+            date.value = if (dayOfMonth < 10) {
+                "0$dayOfMonth/${month + 1}/$year"
+            } else {
+                "$dayOfMonth/${month + 1}/$year"
+            }
             buttonText = date.value
         }, year, month, day
     )
@@ -303,9 +310,13 @@ fun showDatePickerI(context: Context, fechaF: MutableState<String>, fechaI: Muta
 }
 
 @Composable
-fun showDatePickerF(context: Context, fechaF: MutableState<String>, fechaI: MutableState<LocalDate>) : String{
+fun showDatePickerF(context: Context, fechaF: MutableState<String>) : String{
     val formato = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     var currentDate = LocalDate.now()
+
+    if (fechaF.value.length == 9){
+        fechaF.value = "0${fechaF.value}"
+    }
 
     var buttonText by remember { mutableStateOf(currentDate.format(formato)) }
 

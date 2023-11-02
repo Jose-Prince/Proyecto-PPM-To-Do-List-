@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.projecttodolist.Functions.TaskByDate
+import com.example.projecttodolist.Functions.organizeTaskInMap
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Navigation.AppNavigation
 import com.example.projecttodolist.dataStorage.StoreUserTask
@@ -26,8 +28,11 @@ class MainActivity : ComponentActivity() {
 
                     LaunchedEffect(Unit) {
                         val loadedTasks = dataStore.loadTasks()
-                        //taskViewModel.refresh()
                         GlobalVariables.listOfTasks = loadedTasks
+                        for (task in GlobalVariables.listOfTasks){
+                            TaskByDate(task)
+                        }
+                        organizeTaskInMap(GlobalVariables.listWithAllDates, GlobalVariables.MapTaskDates)
                     }
                     AppNavigation()
                 }

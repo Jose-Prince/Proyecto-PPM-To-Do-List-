@@ -1,17 +1,15 @@
 package com.example.projecttodolist.screens
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -33,20 +31,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.projecttodolist.Functions.DrawShape
 import com.example.projecttodolist.Functions.Euclides
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Month
+import com.example.projecttodolist.Navigation.BottomBarScreens
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
 
 @Composable
-fun Calendar() {
+fun Calendar(navController: NavController) {
+    val context = LocalContext.current
     val meses = listOf<String>("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre")
     var i by remember { mutableIntStateOf(0) }
     var mes by remember { mutableStateOf(Month(meses[(GlobalVariables.month + i)%12],GlobalVariables.year + i))}
@@ -108,13 +111,17 @@ fun Calendar() {
                     if (item <= daysOfWeek.indexOf(mes.initialDay) || (item - daysOfWeek.indexOf(mes.initialDay)) > mes.numOfDays) {
                         Text(text = "")
                     } else {
-                        Button(onClick = { /*TODO*/ },
+                        Button(onClick = {
+                                         navController.navigate(route = BottomBarScreens.DailyCalendar.route)
+                        },
                             modifier = Modifier
                                 .background(gray)
                                 .height(70.dp),
                             shape = RectangleShape,
                             colors =
                             if (GlobalVariables.MapTaskDates["${item - daysOfWeek.indexOf(mes.initialDay)}/${mes.monthNumber}/${mes.year}"] != null) {
+                                ButtonDefaults.buttonColors(green)
+                            } else if(GlobalVariables.MapTaskDates["0${item - daysOfWeek.indexOf(mes.initialDay)}/${mes.monthNumber}/${mes.year}"] != null) {
                                 ButtonDefaults.buttonColors(green)
                             } else {
                                 ButtonDefaults.buttonColors(gray)
@@ -133,5 +140,6 @@ fun Calendar() {
 @Preview
 @Composable
 fun CalendarPrev() {
-    Calendar()
+    val navController = rememberNavController()
+    Calendar(navController)
 }

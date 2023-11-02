@@ -16,4 +16,5 @@ object GlobalVariables {
     var taskType by mutableStateOf(false)
     var year by mutableStateOf(LocalDate.now().year)
     var month by mutableStateOf(LocalDate.now().monthValue - 1)
+    var date by mutableStateOf("")
 }
