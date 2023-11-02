@@ -118,11 +118,11 @@ fun LogInScreen(navController: NavController) {
         Row {
             Spacer(modifier = Modifier.width(113.dp))
             Button(onClick = {
-                val token = "loginrequest(user =text , password =text2 )"
-                if ( token != ""){
+                //val token = "loginrequest(user =text , password =text2 )"
+                //if ( token != ""){
 
-                    navController.navigate("AppScreens.Bar.route/$token")
-                }
+                    navController.navigate(AppScreens.Bar.route)
+                //}
 
             },
                 colors = ButtonDefaults.buttonColors(green)

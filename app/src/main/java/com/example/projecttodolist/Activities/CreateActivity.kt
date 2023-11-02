@@ -59,12 +59,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.projecttodolist.Functions.*
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Tarea
+import com.example.projecttodolist.dataStorage.StoreUserTask
 import com.example.projecttodolist.screens.MainTaskScreen
 import com.example.projecttodolist.ui.theme.blue
 import com.example.projecttodolist.ui.theme.darkblue
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -94,6 +96,8 @@ fun Create(navController: NavController) {
     var duration : Long = 1
     val context = LocalContext.current
 
+    val dataStore = StoreUserTask(context)
+
     var fechaF = remember { mutableStateOf("")}
     var fechaI = remember { mutableStateOf(LocalDate.now()) }
 
@@ -101,7 +105,7 @@ fun Create(navController: NavController) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
-    val onClickAction = {
+    val onClickAction : () -> Unit = {
         if (name.text.isBlank()){
             error = true
         } else {
@@ -116,6 +120,9 @@ fun Create(navController: NavController) {
             organizeTaskInMap(GlobalVariables.listWithAllDates, GlobalVariables.MapTaskDates)
             val intent = Intent(context, MainTaskScreen::class.java)
             context.startActivity(intent)
+            scope.launch {
+                dataStore.saveTasks(GlobalVariables.listOfTasks)
+            }
         }
     }
 

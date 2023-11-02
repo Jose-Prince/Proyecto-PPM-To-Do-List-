@@ -37,6 +37,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -52,11 +53,13 @@ import com.example.projecttodolist.Functions.*
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Tarea
 import com.example.projecttodolist.TaskViewModel
+import com.example.projecttodolist.dataStorage.StoreUserTask
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @Composable
 fun Show(taskViewModel : TaskViewModel = viewModel()) {
     GlobalVariables.taskType = true
@@ -70,7 +73,10 @@ fun Show(taskViewModel : TaskViewModel = viewModel()) {
     }
 
     MaterialTheme {
-        androidx.compose.material.Scaffold (backgroundColor = gray, modifier = Modifier.padding(bottom = 50.dp).padding(horizontal = 5.dp).fillMaxSize()){
+        androidx.compose.material.Scaffold (backgroundColor = gray, modifier = Modifier
+            .padding(bottom = 50.dp)
+            .padding(horizontal = 5.dp)
+            .fillMaxSize()){
                 paddingValues ->
             LazyColumn(
                 modifier = Modifier
@@ -159,6 +165,9 @@ fun TaskCard(task : Tarea) {
 @Composable
 fun TaskItem(task: Tarea, onRemove: (Tarea) -> Unit) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val dataStore = StoreUserTask(context)
+
     var show by remember { mutableStateOf(true) }
     val currentItem by rememberUpdatedState(task)
     val dismissState = rememberDismissState(
@@ -183,11 +192,14 @@ fun TaskItem(task: Tarea, onRemove: (Tarea) -> Unit) {
         if (!show) {
             delay(800)
             onRemove(currentItem)
+            scope.launch {
+                dataStore.saveTasks(GlobalVariables.listOfTasks)
+            }
             val message = when (dismissState.dismissDirection) {
                 DismissDirection.StartToEnd -> "Tarea eliminada"
                 DismissDirection.EndToStart -> "Tarea completada"
                 else -> "Item removed"
             }
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()        }
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
     }
 }
