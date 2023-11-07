@@ -3,6 +3,7 @@ package com.example.projecttodolist
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.example.projecttodolist.Database.UserModel
 import java.time.LocalDate
 import java.util.Date
 
@@ -18,4 +19,6 @@ object GlobalVariables {
     var year by mutableStateOf(LocalDate.now().year)
     var month by mutableStateOf(LocalDate.now().monthValue - 1)
     var destination by mutableStateOf(0)
+    var userdat = UserModel(userId = null, username = null,password = null,email = null,createduser = null,arraytodo = null,settings = null, token = null)
+
 }
