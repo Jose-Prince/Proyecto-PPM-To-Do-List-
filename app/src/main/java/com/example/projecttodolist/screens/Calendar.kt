@@ -1,6 +1,9 @@
 package com.example.projecttodolist.screens
 
 import android.content.Intent
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,6 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.projecttodolist.Activities.Create
+import com.example.projecttodolist.Activities.DailyCalendar
 import com.example.projecttodolist.Functions.DrawShape
 import com.example.projecttodolist.Functions.Euclides
 import com.example.projecttodolist.GlobalVariables
@@ -49,10 +54,12 @@ import com.example.projecttodolist.ui.theme.green
 
 @Composable
 fun Calendar(navController: NavController) {
+    val navController = rememberNavController()
     val context = LocalContext.current
     val meses = listOf<String>("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre")
     var i by remember { mutableIntStateOf(0) }
     var mes by remember { mutableStateOf(Month(meses[(GlobalVariables.month + i)%12],GlobalVariables.year + i))}
+    GlobalVariables.destination = 1
     Box (modifier = Modifier
         .fillMaxSize()
         .background(gray)){
@@ -111,8 +118,16 @@ fun Calendar(navController: NavController) {
                     if (item <= daysOfWeek.indexOf(mes.initialDay) || (item - daysOfWeek.indexOf(mes.initialDay)) > mes.numOfDays) {
                         Text(text = "")
                     } else {
+                        var day = "${item - daysOfWeek.indexOf(mes.initialDay)}/${mes.monthNumber}/${mes.year}"
+                        if (day.length == 9){
+                            day = "0$day"
+                        } else {
+                            day
+                        }
                         Button(onClick = {
-                                         navController.navigate(route = BottomBarScreens.DailyCalendar.route)
+                            val intent = Intent(context, DailyCalendar::class.java)
+                            intent.putExtra("fecha", day)
+                            context.startActivity(intent)
                         },
                             modifier = Modifier
                                 .background(gray)

@@ -1,5 +1,6 @@
 package com.example.projecttodolist.Activities
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -97,8 +98,8 @@ fun Create(navController: NavController) {
 
     val dataStore = StoreUserTask(context)
 
-    var fechaF = remember { mutableStateOf("")}
-    var fechaI = remember { mutableStateOf(LocalDate.now()) }
+    val fechaF = remember { mutableStateOf("00:01 AM") }
+    val horaF = remember { mutableStateOf("") }
 
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
@@ -113,10 +114,11 @@ fun Create(navController: NavController) {
             }
             duration = durationCalc(dateI, dateF)
 
-            var task = Tarea(typeAssignation(GlobalVariables.taskType),name.text, dateI, dateF,timeI,timeF,duration)
+            val task = Tarea(typeAssignation(GlobalVariables.taskType),name.text, dateI, dateF,timeI,timeF,duration)
             GlobalVariables.listOfTasks.add(task)
             TaskByDate(task)
             organizeTaskInMap(GlobalVariables.listWithAllDates, GlobalVariables.MapTaskDates)
+            organizeHoursInMap(GlobalVariables.listWithAllDates,GlobalVariables.MapTaskHours)
             val intent = Intent(context, MainTaskScreen::class.java)
             context.startActivity(intent)
             scope.launch {
@@ -203,8 +205,9 @@ fun Create(navController: NavController) {
             horizontalArrangement = Arrangement.Center) {
             Column (horizontalAlignment = Alignment.CenterHorizontally){
                 dateI = showDatePickerI(context, fechaF)
+                timeI = "12:00 AM"
                 if (!checkedState.value)
-                    timeI = showTimePicker()
+                    timeI = showTimePickerI(horaF)
             }
             Spacer(modifier = Modifier.width(30.dp))
             if (checkedState.value)
@@ -217,8 +220,9 @@ fun Create(navController: NavController) {
             Spacer(modifier = Modifier.width(30.dp))
             Column (horizontalAlignment = Alignment.CenterHorizontally){
                 dateF = showDatePickerF(context, fechaF)
+                timeF = "11:00 PM"
                 if (!checkedState.value) {
-                    timeF = showTimePicker()
+                    timeF = showTimePickerF(horaF)
                 }
             }
         }
@@ -334,7 +338,11 @@ fun showDatePickerF(context: Context, fechaF: MutableState<String>) : String{
     val datePickerDialog = DatePickerDialog(
         context,
         {_: DatePicker, year : Int, month : Int, dayOfMonth : Int ->
-            date.value = "$dayOfMonth/${month + 1}/$year"
+            date.value = if (dayOfMonth < 10) {
+                "0$dayOfMonth/${month + 1}/$year"
+            } else {
+                "$dayOfMonth/${month + 1}/$year"
+            }
             buttonText = date.value
         }, year, month, day
     )
@@ -351,19 +359,17 @@ fun showDatePickerF(context: Context, fechaF: MutableState<String>) : String{
 }
 
 @Composable
-fun showTimePicker(): String {
+fun showTimePickerI(horaF: MutableState<String>): String {
     val mContext = LocalContext.current
-
     val actualHour = LocalTime.now()
-
 
     val calendar = Calendar.getInstance()
     val hour = calendar[Calendar.HOUR_OF_DAY]
     val minute = calendar[Calendar.MINUTE]
 
     val timeSuffix = if (actualHour.hour < 12) "AM" else "PM"
-    val formattedHour = if (actualHour.hour > 12) actualHour.hour - 12 else actualHour.hour
-    val formattedMinute = if (actualHour.minute < 10) "0${actualHour.minute}" else actualHour.minute
+    val formattedHour = String.format("%02d", if (actualHour.hour > 12) actualHour.hour - 12 else actualHour.hour)
+    val formattedMinute = String.format("%02d", actualHour.minute)
     val initialTime = "$formattedHour:$formattedMinute $timeSuffix"
 
     val time = remember { mutableStateOf(initialTime) }
@@ -372,8 +378,8 @@ fun showTimePicker(): String {
         mContext,
         {_, hour : Int, minute : Int ->
             val timeSuffix = if (hour < 12) "AM" else "PM"
-            val formattedHour = if (hour > 12) hour - 12 else hour
-            val formattedMinute = if (minute < 10) "0$minute" else minute
+            val formattedHour = String.format("%02d", if (hour > 12) hour - 12 else hour)
+            val formattedMinute = String.format("%02d",minute)
             time.value = "$formattedHour:$formattedMinute $timeSuffix"
             }, hour, minute, false
     )
@@ -381,7 +387,52 @@ fun showTimePicker(): String {
     TextButton(onClick = { timePickerDialog.show() }) {
         Text(text = time.value, fontSize = 20.sp, color = green)
     }
-    return time.toString()
+
+    horaF.value = time.value
+    return time.value
+}
+
+@SuppressLint("SuspiciousIndentation")
+@Composable
+fun showTimePickerF(horaF: MutableState<String>): String {
+    val mContext = LocalContext.current
+    val formato = DateTimeFormatter.ofPattern("hh:mm a")
+
+    val actualHour = LocalTime.now().plusHours(1)
+
+
+    val calendar = Calendar.getInstance()
+    val hour = calendar[Calendar.HOUR_OF_DAY]
+    val minute = calendar[Calendar.MINUTE]
+
+    val timeSuffix = if (actualHour.hour < 12) "AM" else "PM"
+    val formattedHour = String.format("%02d", if (actualHour.hour > 12) actualHour.hour - 12 else actualHour.hour)
+    val formattedMinute = String.format("%02d", actualHour.minute)
+    val initialTime = "$formattedHour:$formattedMinute $timeSuffix"
+
+    val time = remember { mutableStateOf(initialTime) }
+
+    val timePickerDialog = TimePickerDialog(
+        mContext,
+        {_, hour : Int, minute : Int ->
+            val timeSuffix = if (hour < 12) "AM" else "PM"
+            val formattedHour = String.format("%02d", if (hour > 12) hour - 12 else hour)
+            val formattedMinute = String.format("%02d",minute)
+            time.value = "$formattedHour:$formattedMinute $timeSuffix"
+        }, hour, minute, false
+    )
+
+    if (LocalTime.parse(horaF.value, formato) > LocalTime.parse(time.value, formato)) {
+        val tiempo = LocalTime.parse(horaF.value,formato).plusHours(1)
+        time.value = tiempo.format(formato)
+    } else {
+        time.value = time.value
+    }
+
+    TextButton(onClick = { timePickerDialog.show() }) {
+        Text(text = time.value, fontSize = 20.sp, color = green)
+    }
+    return time.value
 }
 
 @Composable

@@ -63,7 +63,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun Show(taskViewModel : TaskViewModel = viewModel()) {
     GlobalVariables.taskType = true
-
+    GlobalVariables.destination = 0
     val scrollState = rememberLazyListState()
 
     val tasks by taskViewModel.taskState.collectAsState()
@@ -200,6 +200,8 @@ fun TaskItem(task: Tarea, onRemove: (Tarea) -> Unit) {
                 DismissDirection.EndToStart -> "Tarea completada"
                 else -> "Item removed"
             }
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            organizeTaskInMap(GlobalVariables.listWithAllDates,GlobalVariables.MapTaskDates)
+        }
     }
 }
