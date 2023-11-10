@@ -40,6 +40,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.projecttodolist.Functions.*
+import com.example.projecttodolist.GlobalVariables.userdat
 import com.example.projecttodolist.Navigation.AppScreens
 import com.example.projecttodolist.connect.loginrequest
 import com.example.projecttodolist.ui.theme.blue
@@ -78,6 +79,7 @@ fun LogInScreen(navController: NavController) {
                 onValueChange = {newText ->
                     if (newText.length <= maxCharacters)
                         text = newText
+                        userdat.username = text
                 },
                 modifier = Modifier
                     .border(width = 2.dp, blue, RoundedCornerShape(32.dp))
@@ -102,6 +104,7 @@ fun LogInScreen(navController: NavController) {
                 onValueChange = {newText ->
                     if (newText.length <= maxCharacters)
                         text2 = newText
+                        userdat.password = text2
                 },
                 modifier = Modifier
                     .border(width = 2.dp, blue, RoundedCornerShape(32.dp))
