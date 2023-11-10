@@ -12,4 +12,7 @@ sealed class AppScreens(val route : String) {
 
     //Pantalla de muestra de tareas
     object Show: AppScreens("show")
+
+    //Pantalla de registro
+    object RegisterScreen : AppScreens("register")
 }

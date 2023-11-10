@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.projecttodolist.Activities.Create
 import com.example.projecttodolist.screens.LogInScreen
 import com.example.projecttodolist.screens.MainTaskScreen
+import com.example.projecttodolist.screens.RegisterScreen
 import com.example.projecttodolist.screens.Show
 
 @Composable
@@ -27,6 +28,9 @@ fun AppNavigation() {
         }
         composable(route = AppScreens.Show.route){
             Show()
+        }
+        composable(route = AppScreens.RegisterScreen.route){
+            RegisterScreen(navController)
         }
     }
 }

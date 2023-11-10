@@ -141,7 +141,7 @@ fun LogInScreen(navController: NavController) {
             .align(Alignment.CenterHorizontally)){
             Spacer(modifier = Modifier.width(117.dp))
             Button(
-                onClick = { navController.navigate(route = AppScreens.Bar.route) },
+                onClick = { navController.navigate(route = AppScreens.RegisterScreen.route) },
                 colors = ButtonDefaults.buttonColors(green)
             ) {
                 Text(text = "Resgistrarse",
