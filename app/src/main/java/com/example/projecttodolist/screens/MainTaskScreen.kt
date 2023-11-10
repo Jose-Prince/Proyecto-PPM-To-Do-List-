@@ -3,6 +3,7 @@ package com.example.projecttodolist.screens
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -17,10 +18,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
@@ -43,6 +48,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.projecttodolist.Activities.CreateActivity
+import com.example.projecttodolist.DrawerMenuItem
 import com.example.projecttodolist.Functions.*
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Navigation.BarNavigation
@@ -53,6 +59,7 @@ import com.example.projecttodolist.ui.theme.darkblue
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class MainTaskScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,7 +86,18 @@ fun MainTaskScreen(navController: NavController){
 
         Scaffold (
             topBar = {if (GlobalVariables.showTopBar){ Column (horizontalAlignment = Alignment.CenterHorizontally){
-                DrawShape(shape = RectangleShape)
+                Box {
+                    DrawShape(shape = RectangleShape)
+                    IconButton(onClick = {
+                        scope.launch {
+                            scaffoldState.drawerState.open()
+                        }
+                    }) {
+                        Icon(imageVector = Icons.Default.Menu,
+                            contentDescription = null,
+                            tint = gray)
+                    }
+                }
                 Spacer(modifier = Modifier.size(15.dp))
                 Image(
                     painter = painterResource(id = R.drawable.baseline_person_24),
@@ -88,6 +106,29 @@ fun MainTaskScreen(navController: NavController){
                 Text(text = "Nombre de usuario",
                     fontSize = 35.sp)
             }}},
+            drawerContent = {
+                            DrawerHeader()
+                DrawerBody(items = listOf(
+                    DrawerMenuItem(
+                        id = "addRequest",
+                        title = "AddRequest",
+                        image = R.drawable.baseline_person_add_alt_1_24
+                    ),
+                    DrawerMenuItem(
+                        id = "showCollabs",
+                        title = "ShowCollabs",
+                        image = R.drawable.baseline_person_24
+                    ),
+                    DrawerMenuItem(
+                        id = "showGroups",
+                        title = "ShowGroups",
+                        image = R.drawable.baseline_people_alt_24
+                    )
+                ),
+                    onItemClick = {
+                        println("Click item")
+                    })
+            },
             bottomBar = { BottomBar(navController = navController)},
             scaffoldState = scaffoldState,
             floatingActionButton = { if (GlobalVariables.showFloatingButton) {

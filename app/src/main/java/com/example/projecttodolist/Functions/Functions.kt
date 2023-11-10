@@ -1,5 +1,9 @@
 package com.example.projecttodolist.Functions
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.Tarea
 import java.text.ParseException

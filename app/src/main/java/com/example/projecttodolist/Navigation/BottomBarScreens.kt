@@ -11,12 +11,12 @@ sealed class BottomBarScreens(
     object ShowTasks: BottomBarScreens(
         route = "showTasks",
         title = "ShowTasks",
-        icon = R.drawable.baseline_format_align_justify_24
+        icon = R.drawable.task_alt_fill0_wght400_grad0_opsz24
     )
     object Settings: BottomBarScreens(
         route = "settings",
         title = "Settings",
-        icon = R.drawable.baseline_more_vert_24
+        icon = R.drawable.settings_fill0_wght400_grad0_opsz24
     )
     object Calendar: BottomBarScreens(
         route = "calendar",
