@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.projecttodolist.Database.save
 import com.example.projecttodolist.Functions.DrawShape
 import com.example.projecttodolist.Navigation.AppScreens
 import com.example.projecttodolist.ui.theme.blue
@@ -42,9 +43,18 @@ import com.example.projecttodolist.ui.theme.green
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(navController: NavController) {
-    var text by remember { mutableStateOf("") }
-    var text2 by remember { mutableStateOf("") }
-    var text3 by remember { mutableStateOf("") }
+
+    var user : String = ""
+    var password : String = ""
+    var email : String = ""
+    //var settings : String = arrayOf(0,0,0,0,0,0).toString() //PRINCE AQUI PUEDES AGREGAR
+
+    save(user, password, email) //Se puede agregar default settings como un button false true eg darkmode enable(1) or disabled(0)
+    //ESTA FUNCION ES UTILIZADA PARA guardar elementos a la database PERO ES UN BOOL POR LO TANTO SI ES TRUE LLEGA AL LOGIN SCREEN SINO PUES SE QUEDA ACA
+
+    var usuario by remember { mutableStateOf("") }
+    var contraseña by remember { mutableStateOf("") }
+    var confirm by remember { mutableStateOf("") }
     var maxCharacters : Int = 36
     Box (
         modifier = Modifier
@@ -67,10 +77,10 @@ fun RegisterScreen(navController: NavController) {
         Row {
             Spacer(modifier = Modifier.width(55.dp))
             OutlinedTextField(
-                value = text,
+                value = usuario,
                 onValueChange = {newText ->
                     if (newText.length <= maxCharacters)
-                        text = newText
+                        usuario = newText
                 },
                 modifier = Modifier
                     .border(width = 2.dp, blue, RoundedCornerShape(32.dp))
@@ -91,10 +101,10 @@ fun RegisterScreen(navController: NavController) {
         Row {
             Spacer(modifier = Modifier.width(55.dp))
             OutlinedTextField(
-                value = text2,
+                value = contraseña,
                 onValueChange = {newText ->
                     if (newText.length <= maxCharacters)
-                        text2 = newText
+                        contraseña = newText
                 },
                 modifier = Modifier
                     .border(width = 2.dp, blue, RoundedCornerShape(32.dp))
@@ -116,10 +126,10 @@ fun RegisterScreen(navController: NavController) {
         Row {
             Spacer(modifier = Modifier.width(55.dp))
             OutlinedTextField(
-                value = text3,
+                value = confirm,
                 onValueChange = {newText ->
                     if (newText.length <= maxCharacters)
-                        text3 = newText
+                        confirm = newText
                 },
                 modifier = Modifier
                     .border(width = 2.dp, blue, RoundedCornerShape(32.dp))
