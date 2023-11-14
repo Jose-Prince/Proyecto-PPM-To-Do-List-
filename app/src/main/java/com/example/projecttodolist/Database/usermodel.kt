@@ -60,7 +60,7 @@ data class UserModel(
                 .claim("email", userdat.email.toString())
                 .claim("arraytodo", userdat.arraytodo.toString())
                 .claim("createduser", userdat.createduser.toString())
-                .claim("grupos", userdat.grupos.toString())
+                .claim("grupos", userdat.grupos)
                 .signWith(SignatureAlgorithm.HS256, "secret".toByteArray())
                 .compact()
 
@@ -111,11 +111,25 @@ fun deletegroupuser(
         dbRef.setValue(userdat)
 }
 
+fun deletegrupo(
+    idtarget: String, location: Int, idusuario:String //usuario principal no al que se elimina
+){
+    val dbRef = FirebaseDatabase.getInstance().getReference("usuario").child(idusuario)
+    val array = userdat.grupos.split(",")
+    val grupo = userdat.grupos.replace(array[location], "")
+
+    userdat.grupos = grupo
+    //userdat  = UserModel(userdat.userId, userdat.username, userdat.password, userdat.email, userdat.createduser,
+    //userdat.arraytodo, userdat.grupos, userdat.settings, userdat.token)
+    dbRef.setValue(userdat)
+}
+
+
 fun addgroup(
     idtarget: Int, idusuario:String //usuario principal no al que se elimina
 ){
     val dbRef = FirebaseDatabase.getInstance().getReference("usuario").child(idusuario)
-    userdat.grupos = userdat.grupos + "-" + idtarget
+    userdat.grupos = userdat.grupos + "-" + idtarget + "," //Entonces el - Es separado para los usuarios y la , sive para diviidir los grupos
     dbRef.setValue(userdat)
 }
 

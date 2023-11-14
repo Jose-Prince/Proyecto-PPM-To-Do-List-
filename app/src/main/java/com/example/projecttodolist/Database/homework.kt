@@ -2,6 +2,7 @@ package com.example.projecttodolist.Database
 
 import android.util.Log
 import com.example.projecttodolist.GlobalVariables
+import com.example.projecttodolist.GlobalVariables.userdat
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import io.jsonwebtoken.Jwts
@@ -10,15 +11,14 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 data class homework(
-    var userId: String? = null,
-    var username: String? = null,
-    var password: String? = null,
-    var email: String? = null,
-    var createduser: String? = null,
-    var arraytodo: String? = null, //ARRAY sera ahora para agregar grupos
-    var grupos: String = "-$userId", //This is for groups
-    var settings: String?= null, //
-    var token: String?= null )
+    var idtarea: String? = null,
+    var title: String? = null,
+    var description: String? = null,
+    var type: String? = null,
+    var status: String? = null,
+    var timefinished: String? = null, //ARRAY sera ahora para agregar grupos
+    var grupos: String = userdat.grupos, //This is for groups
+     )
 
 fun  createtarea( username: String, password: String, email: String, idusername:String):Boolean { //Funcion registrar datos a REALTIME
     val dbRef = FirebaseDatabase.getInstance().getReference("tareas")
