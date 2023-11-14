@@ -2,6 +2,7 @@ package com.example.projecttodolist.Database
 
 import android.util.Log
 import com.example.projecttodolist.GlobalVariables
+import com.example.projecttodolist.GlobalVariables.tareas
 import com.example.projecttodolist.GlobalVariables.userdat
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -16,14 +17,15 @@ data class homework(
     var description: String? = null,
     var type: String? = null,
     var status: String? = null,
+    var timecreated: String? = null,
     var timefinished: String? = null, //ARRAY sera ahora para agregar grupos
     var grupos: String = userdat.grupos, //This is for groups
      )
 
-fun  createtarea( username: String, password: String, email: String, idusername:String):Boolean { //Funcion registrar datos a REALTIME
+fun  createtarea( idtarea: String, description: String, type: String, status:String, title: String):Boolean { //Funcion registrar datos a REALTIME
     val dbRef = FirebaseDatabase.getInstance().getReference("tareas")
     var state: Boolean
-    if (username.isEmpty() or password.isEmpty() or email.isEmpty()) {
+    if (title.isEmpty() ) {
         Log.e("empty data", "Los campos ingresados estan vacio")
         state = false
     }else{
@@ -37,27 +39,16 @@ fun  createtarea( username: String, password: String, email: String, idusername:
 
         //PARA CREAR FECHA DE CREACION ARRIBA
 
-        GlobalVariables.userdat.userId = idusername
-        GlobalVariables.userdat.password = password
-        GlobalVariables.userdat.email = email
-        GlobalVariables.userdat.createduser =formattedDate.toString()
-        GlobalVariables.userdat.arraytodo = "No Groups"
+
+
+        tareas.idtarea = dbRef.push().key!!
+        tareas.title = title
+        tareas.description = description
+        tareas.timecreated =formattedDate.toString()
+        tareas.timefinished = "None"
 
         //UTILIZACION DE API JWTS
-        val compactJws: String = Jwts.builder()
-            .claim("UserID", GlobalVariables.userdat.userId.toString())
-            .claim("username", GlobalVariables.userdat.username.toString())
-            .claim("password", GlobalVariables.userdat.password.toString())
-            .claim("email", GlobalVariables.userdat.email.toString())
-            .claim("arraytodo", GlobalVariables.userdat.arraytodo.toString())
-            .claim("createduser", GlobalVariables.userdat.createduser.toString())
-            .claim("grupos", GlobalVariables.userdat.grupos.toString())
-            .signWith(SignatureAlgorithm.HS256, "secret".toByteArray())
-            .compact()
-
-        GlobalVariables.userdat.token = compactJws
-
-        dbRef.child(GlobalVariables.userdat.userId.toString()).setValue(GlobalVariables.userdat)
+        dbRef.child(GlobalVariables.tareas.idtarea.toString()).setValue(tareas)
             .addOnCompleteListener {
                 Log.e("Succesful adding", "Se ha ingresado con exito")
 
@@ -70,4 +61,56 @@ fun  createtarea( username: String, password: String, email: String, idusername:
 
     return state
 
+}
+
+fun updatetarea(type: String, dataaupdatear : String, idtarea: String){      //type si es el titulo que quiere cambiar
+
+    val dbRef = FirebaseDatabase.getInstance().getReference("tareas")
+
+    if (type == "titulo"){ // Titulo cambiado
+        tareas.title = type
+        dbRef.child(tareas.idtarea.toString()).setValue(tareas)
+
+    }
+    if (type == "descripcion"){ //Descipcion se puede cambiar
+        tareas.description = type
+        dbRef.child(tareas.idtarea.toString()).setValue(tareas)
+
+    }
+    if (type == "TimeFinished"){ //Tiempo terminado
+        tareas.timefinished = type
+        dbRef.child(tareas.idtarea.toString()).setValue(tareas)
+
+    }
+    if (type == "status"){ //Esta terminado o no
+        tareas.status = type
+        dbRef.child(tareas.idtarea.toString()).setValue(tareas)
+
+    }
+    if (type == "type"){ //Tipo de tarea
+        tareas.type = type
+        dbRef.child(tareas.idtarea.toString()).setValue(tareas)
+
+    }
+
+    //PS En el usermodel se tiene que cambiar la clase de grupo.
+}
+
+fun deletetarea(targetvalue : String, idtarea: String){ //ID de la tarea
+
+    val dbRef = FirebaseDatabase.getInstance().getReference("usuario").child(userdat.userId.toString())
+
+
+    var arraytodo = userdat.arraytodo.toString().replace(",$targetvalue", "")
+        setvalue(arraytodo, "arraytodo", userdat.userId.toString())
+
+
+    val dbReftarea = FirebaseDatabase.getInstance().getReference("tareas").child(idtarea)
+    val mTask = dbReftarea.removeValue()
+    mTask.addOnSuccessListener {
+        Log.e("DELETED USER", "Se ha eliminado la tarea")
+
+    }.addOnFailureListener{
+        Log.e("USER STILL EXIST", "No se ha eliminado la tarea")
+    }
 }

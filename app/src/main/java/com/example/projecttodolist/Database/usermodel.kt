@@ -151,7 +151,7 @@ fun setvalue(
         userdat.email = valuetarget
         dbRef.setValue(userdat)
     }
-    if (location == "arraytodo"){
+    if (location == "arraytodo"){ //Metes el ID de la tarea
         userdat.arraytodo = valuetarget
         dbRef.setValue(userdat)
     }
@@ -176,8 +176,5 @@ fun decodeJWT(token: String) {
     userdat.password = claims.get("password", String::class.java)
     userdat.email = claims.get("email", String::class.java)
     userdat.grupos = claims.get("grupos", String::class.java)
-
-
-
 }
 
