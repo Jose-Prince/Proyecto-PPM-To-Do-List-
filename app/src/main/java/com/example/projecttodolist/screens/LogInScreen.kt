@@ -35,25 +35,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import com.example.projecttodolist.Database.login
 import com.example.projecttodolist.Functions.*
 import com.example.projecttodolist.GlobalVariables.userdat
 import com.example.projecttodolist.Navigation.AppScreens
-import com.example.projecttodolist.connect.loginrequest
 import com.example.projecttodolist.ui.theme.blue
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
-import org.json.JSONArray
+import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LogInScreen(navController: NavController) {
+    val auth = FirebaseAuth.getInstance()
+    val context = LocalContext.current
     var text by remember { mutableStateOf("") }
     var text2 by remember { mutableStateOf("") }
-    var maxCharacters : Int = 36
+    val maxCharacters = 36
     Box (
         modifier = Modifier
             .fillMaxSize()
@@ -69,7 +67,7 @@ fun LogInScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(125.dp))
 
         Text(
-            text = "Usuario:",
+            text = "Correo:",
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth())
         Row {
@@ -77,9 +75,10 @@ fun LogInScreen(navController: NavController) {
             OutlinedTextField(
                 value = text,
                 onValueChange = {newText ->
-                    if (newText.length <= maxCharacters)
-                        text = newText
-                        userdat.username = text
+                if (newText.length <= maxCharacters){
+                    text = newText
+                }
+                userdat.email = text
                 },
                 modifier = Modifier
                     .border(width = 2.dp, blue, RoundedCornerShape(32.dp))
@@ -102,9 +101,10 @@ fun LogInScreen(navController: NavController) {
             OutlinedTextField(
                 value = text2,
                 onValueChange = {newText ->
-                    if (newText.length <= maxCharacters)
+                    if (newText.length <= maxCharacters) {
                         text2 = newText
                         userdat.password = text2
+                    }
                 },
                 modifier = Modifier
                     .border(width = 2.dp, blue, RoundedCornerShape(32.dp))
@@ -121,11 +121,16 @@ fun LogInScreen(navController: NavController) {
         Row {
             Spacer(modifier = Modifier.width(113.dp))
             Button(onClick = {
-                //val token = "loginrequest(user =text , password =text2 )"
-                //if ( token != ""){
 
-                    navController.navigate(AppScreens.Bar.route)
-                //}
+                val token = login( auth, userdat.email.toString(), userdat.password.toString(), context=context )
+                if (token){
+                    Log.e("Funcional", userdat.email.toString())
+                }
+                else{
+                    Log.e("Fail", "conexion fallida")
+
+                }
+                navController.navigate(AppScreens.Bar.route)
 
             },
                 colors = ButtonDefaults.buttonColors(green)
@@ -159,4 +164,5 @@ fun LogInScreen(navController: NavController) {
 fun LogInPrev() {
     val navController = rememberNavController()
     LogInScreen(navController = navController)
+
 }

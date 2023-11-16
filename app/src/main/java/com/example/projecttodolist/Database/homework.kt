@@ -48,7 +48,7 @@ fun  createtarea( idtarea: String, description: String, type: String, status:Str
         tareas.timefinished = "None"
 
         //UTILIZACION DE API JWTS
-        dbRef.child(GlobalVariables.tareas.idtarea.toString()).setValue(tareas)
+        dbRef.child(tareas.idtarea.toString()).setValue(tareas)
             .addOnCompleteListener {
                 Log.e("Succesful adding", "Se ha ingresado con exito")
 
@@ -102,7 +102,7 @@ fun deletetarea(targetvalue : String, idtarea: String){ //ID de la tarea
 
 
     var arraytodo = userdat.arraytodo.toString().replace(",$targetvalue", "")
-        setvalue(arraytodo, "arraytodo", userdat.userId.toString())
+    setvalue(arraytodo, "arraytodo", userdat.userId.toString())
 
 
     val dbReftarea = FirebaseDatabase.getInstance().getReference("tareas").child(idtarea)

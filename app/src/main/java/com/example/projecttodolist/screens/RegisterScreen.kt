@@ -49,7 +49,7 @@ fun RegisterScreen(navController: NavController) {
     var email : String = ""
     //var settings : String = arrayOf(0,0,0,0,0,0).toString() //PRINCE AQUI PUEDES AGREGAR
 
-    save(user, password, email) //Se puede agregar default settings como un button false true eg darkmode enable(1) or disabled(0)
+    //save(user, password, email) //Se puede agregar default settings como un button false true eg darkmode enable(1) or disabled(0)
     //ESTA FUNCION ES UTILIZADA PARA guardar elementos a la database PERO ES UN BOOL POR LO TANTO SI ES TRUE LLEGA AL LOGIN SCREEN SINO PUES SE QUEDA ACA
 
     var usuario by remember { mutableStateOf("") }
