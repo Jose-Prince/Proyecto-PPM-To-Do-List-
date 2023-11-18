@@ -1,5 +1,6 @@
 package com.example.projecttodolist.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -52,6 +53,7 @@ fun RegisterScreen(navController: NavController) {
 
     var user : String = ""
     var password : String = ""
+    val context = LocalContext.current
     var email : String = ""
     //var settings : String = arrayOf(0,0,0,0,0,0).toString() //PRINCE AQUI PUEDES AGREGAR
 
@@ -185,11 +187,12 @@ fun RegisterScreen(navController: NavController) {
             Button(
                 onClick = {
                     val auth = FirebaseAuth.getInstance()
-
-                    signUpUser(auth, userdat.email.toString(), contraseña, userdat.password.toString(), userdat.username.toString())
-
-
-                    navController.navigate(route = AppScreens.Bar.route)
+                    if(signUpUser(auth, userdat.email.toString(), contraseña, userdat.password.toString(), userdat.username.toString())){
+                        navController.navigate(route = AppScreens.Bar.route)
+                    }
+                    else{
+                        Toast.makeText(context, "Cargando", Toast.LENGTH_SHORT).show()
+                    }
                      }, //Puede ser esto
                 colors = ButtonDefaults.buttonColors(green)
             ) {

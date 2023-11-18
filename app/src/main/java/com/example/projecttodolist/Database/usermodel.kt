@@ -1,6 +1,7 @@
 package com.example.projecttodolist.Database
 
 import android.util.Log
+import com.example.projecttodolist.GlobalVariables.dbRefusuaio
 import com.example.projecttodolist.GlobalVariables.userdat
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -28,9 +29,8 @@ data class UserModel(
 
 //Registrar
 
- lateinit var dbRef: DatabaseReference
     fun  save( username: String, password: String, email: String, idusername:String):Boolean { //Funcion registrar datos a REALTIME
-        val dbRef = FirebaseDatabase.getInstance().getReference("usuario")
+
         var state: Boolean
         if (username.isEmpty() or password.isEmpty() or email.isEmpty()) {
             Log.e("empty data", "Los campos ingresados estan vacio")
@@ -66,7 +66,7 @@ data class UserModel(
 
             userdat.token = compactJws
 
-            dbRef.child(userdat.userId.toString()).setValue(userdat)
+            dbRefusuaio.child(userdat.userId.toString()).setValue(userdat)
                 .addOnCompleteListener {
                     Log.e("Succesful adding", "Se ha ingresado con exito")
 

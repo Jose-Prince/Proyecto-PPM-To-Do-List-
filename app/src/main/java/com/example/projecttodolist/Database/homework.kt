@@ -2,6 +2,7 @@ package com.example.projecttodolist.Database
 
 import android.util.Log
 import com.example.projecttodolist.GlobalVariables
+import com.example.projecttodolist.GlobalVariables.dbtareas
 import com.example.projecttodolist.GlobalVariables.tareas
 import com.example.projecttodolist.GlobalVariables.userdat
 import com.google.firebase.database.DatabaseReference
@@ -39,8 +40,6 @@ fun  createtarea( idtarea: String, description: String, type: String, status:Str
 
         //PARA CREAR FECHA DE CREACION ARRIBA
 
-
-
         tareas.idtarea = dbRef.push().key!!
         tareas.title = title
         tareas.description = description
@@ -65,31 +64,31 @@ fun  createtarea( idtarea: String, description: String, type: String, status:Str
 
 fun updatetarea(type: String, dataaupdatear : String, idtarea: String){      //type si es el titulo que quiere cambiar
 
-    val dbRef = FirebaseDatabase.getInstance().getReference("tareas")
+
 
     if (type == "titulo"){ // Titulo cambiado
         tareas.title = type
-        dbRef.child(tareas.idtarea.toString()).setValue(tareas)
+        dbtareas.child(tareas.idtarea.toString()).setValue(tareas)
 
     }
     if (type == "descripcion"){ //Descipcion se puede cambiar
         tareas.description = type
-        dbRef.child(tareas.idtarea.toString()).setValue(tareas)
+        dbtareas.child(tareas.idtarea.toString()).setValue(tareas)
 
     }
     if (type == "TimeFinished"){ //Tiempo terminado
         tareas.timefinished = type
-        dbRef.child(tareas.idtarea.toString()).setValue(tareas)
+        dbtareas.child(tareas.idtarea.toString()).setValue(tareas)
 
     }
     if (type == "status"){ //Esta terminado o no
         tareas.status = type
-        dbRef.child(tareas.idtarea.toString()).setValue(tareas)
+        dbtareas.child(tareas.idtarea.toString()).setValue(tareas)
 
     }
     if (type == "type"){ //Tipo de tarea
         tareas.type = type
-        dbRef.child(tareas.idtarea.toString()).setValue(tareas)
+        dbtareas.child(tareas.idtarea.toString()).setValue(tareas)
 
     }
 
@@ -98,7 +97,7 @@ fun updatetarea(type: String, dataaupdatear : String, idtarea: String){      //t
 
 fun deletetarea(targetvalue : String, idtarea: String){ //ID de la tarea
 
-    val dbRef = FirebaseDatabase.getInstance().getReference("usuario").child(userdat.userId.toString())
+    dbtareas.child(userdat.userId.toString())
 
 
     var arraytodo = userdat.arraytodo.toString().replace(",$targetvalue", "")

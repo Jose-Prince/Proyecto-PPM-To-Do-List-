@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.example.projecttodolist.Database.UserModel
 import com.example.projecttodolist.Database.homework
+import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDate
 import java.util.Date
 
@@ -22,5 +23,7 @@ object GlobalVariables {
     var destination by mutableStateOf(0)
     var userdat = UserModel(userId = null, username = null,password = null,email = null,createduser = null,arraytodo = null,settings = null, token = null)
     var tareas = homework(idtarea = null, title = null, description = null, type = null, status = null, timefinished = null)
+    val dbRefusuaio = FirebaseDatabase.getInstance().getReference("usuario")
+    val dbtareas = FirebaseDatabase.getInstance().getReference("tareas")
 
 }

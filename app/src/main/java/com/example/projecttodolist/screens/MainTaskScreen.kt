@@ -51,6 +51,7 @@ import com.example.projecttodolist.Activities.CreateActivity
 import com.example.projecttodolist.DrawerMenuItem
 import com.example.projecttodolist.Functions.*
 import com.example.projecttodolist.GlobalVariables
+import com.example.projecttodolist.GlobalVariables.userdat
 import com.example.projecttodolist.Navigation.BarNavigation
 import com.example.projecttodolist.Navigation.BottomBarScreens
 import com.example.projecttodolist.R
@@ -103,7 +104,7 @@ fun MainTaskScreen(navController: NavController){
                     painter = painterResource(id = R.drawable.baseline_person_24),
                     contentDescription = "Imagen de perfil",
                     modifier = Modifier.size(60.dp))
-                Text(text = "Nombre de usuario",
+                Text(text = userdat.email.toString(),
                     fontSize = 35.sp)
             }}},
             drawerContent = {
