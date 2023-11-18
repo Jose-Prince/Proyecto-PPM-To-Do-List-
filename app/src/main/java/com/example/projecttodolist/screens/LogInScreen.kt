@@ -1,6 +1,7 @@
 package com.example.projecttodolist.screens
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -122,16 +123,17 @@ fun LogInScreen(navController: NavController) {
             Spacer(modifier = Modifier.width(113.dp))
             Button(onClick = {
 
-                val token = login( auth, userdat.email.toString(), userdat.password.toString(), context=context )
+                val token = login( auth, userdat.email.toString(), userdat.password.toString() )
                 if (token){
                     Log.e("Funcional", userdat.email.toString())
+                    navController.navigate(AppScreens.Bar.route)
+                    Toast.makeText(context, "Bienvenido", Toast.LENGTH_SHORT).show()
                 }
                 else{
                     Log.e("Fail", "conexion fallida")
+                    Toast.makeText(context, "Fallido", Toast.LENGTH_SHORT).show()
 
                 }
-                navController.navigate(AppScreens.Bar.route)
-
             },
                 colors = ButtonDefaults.buttonColors(green)
             ) {

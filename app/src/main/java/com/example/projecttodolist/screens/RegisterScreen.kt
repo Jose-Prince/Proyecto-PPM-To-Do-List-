@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,12 +35,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.projecttodolist.Database.save
+import com.example.projecttodolist.Database.signUpUser
 import com.example.projecttodolist.Functions.DrawShape
 import com.example.projecttodolist.GlobalVariables.userdat
 import com.example.projecttodolist.Navigation.AppScreens
 import com.example.projecttodolist.ui.theme.blue
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,7 +61,7 @@ fun RegisterScreen(navController: NavController) {
     var usuario by remember { mutableStateOf("") }
     var contraseña by remember { mutableStateOf("") }
     var confirm by remember { mutableStateOf("") }
-    var confirm by remember { mutableStateOf("") }
+    var correo by remember { mutableStateOf("") }
     var maxCharacters : Int = 36
     Box (
         modifier = Modifier
@@ -107,7 +112,7 @@ fun RegisterScreen(navController: NavController) {
                 onValueChange = {newText ->
                     if (newText.length <= maxCharacters)
                         correo = newText
-                    userdat.username = correo
+                    userdat.email = correo
                 },
                 modifier = Modifier
                     .border(width = 2.dp, blue, RoundedCornerShape(32.dp))
@@ -155,9 +160,10 @@ fun RegisterScreen(navController: NavController) {
             OutlinedTextField(
                 value = confirm,
                 onValueChange = {newText ->
-                    if (newText.length <= maxCharacters)
+                    if (newText.length <= maxCharacters) {
                         confirm = newText
                         userdat.password = confirm
+                    }
 
                 },
                 modifier = Modifier
@@ -177,7 +183,14 @@ fun RegisterScreen(navController: NavController) {
             .align(Alignment.CenterHorizontally)){
             Spacer(modifier = Modifier.width(117.dp))
             Button(
-                onClick = { navController.navigate(route = AppScreens.Bar.route) },
+                onClick = {
+                    val auth = FirebaseAuth.getInstance()
+
+                    signUpUser(auth, userdat.email.toString(), contraseña, userdat.password.toString(), userdat.username.toString())
+
+
+                    navController.navigate(route = AppScreens.Bar.route)
+                     }, //Puede ser esto
                 colors = ButtonDefaults.buttonColors(green)
             ) {
                 Text(text = "Resgistrarse",
