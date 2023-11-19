@@ -4,10 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -23,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.projecttodolist.Navigation.AppScreens
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -45,7 +48,7 @@ suspend fun fetchData(onSuccess: (List<Group>) -> Unit) {
         val groups = parseJson(responseData)
         onSuccess(groups)
     } else {
-        // Handle error
+        println("Ha ocurrido un error!")
     }
 }
 
@@ -60,13 +63,13 @@ fun ShowGroups(navController: NavController) {
     val groups = remember { mutableStateOf<List<Group>>(emptyList()) }
     val context = LocalContext.current
 
-    LaunchedEffect(true) {
-        fetchData { newGroups ->
-//            withContext(Dispatchers.Main) {
-                groups.value = newGroups
-//            }
-        }
-    }
+//    LaunchedEffect(true) {
+//        fetchData { newGroups ->
+////            withContext(Dispatchers.Main) {
+//                groups.value = newGroups
+////            }
+//        }
+//    }
 
     Column(
         modifier = Modifier
@@ -85,6 +88,14 @@ fun ShowGroups(navController: NavController) {
                     Text(text = group.name)
                 }
             }
+        }
+        Button(
+            onClick = { navController.navigate(AppScreens.Bar.route) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text(text = "Go Home")
         }
     }
 }
