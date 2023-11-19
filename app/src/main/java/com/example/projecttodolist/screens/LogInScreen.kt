@@ -123,20 +123,7 @@ fun LogInScreen(navController: NavController) {
         Row {
             Spacer(modifier = Modifier.width(113.dp))
             Button(onClick = {
-
-
-
-                val token = login( userdat.email.toString(), userdat.password.toString() )
-                if (token){
-                    Log.e("Funcional", userdat.email.toString())
-                    navController.navigate(AppScreens.Bar.route)
-                    Toast.makeText(context, "Bienvenido", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    Log.e("Fail", "conexion fallida")
-                    Toast.makeText(context, "Fallido", Toast.LENGTH_SHORT).show()
-
-                }
+                signIn( userdat.email.toString(), userdat.password.toString(), navController )
             },
                 colors = ButtonDefaults.buttonColors(green)
             ) {
@@ -172,18 +159,15 @@ fun LogInPrev() {
 
 }
 
-fun login( email : String, password: String ):Boolean {
-    var statement = false
-    if  (email.isBlank() || password.isBlank()) {
-        Log.e("el correo esta en blanco", "blank pass or email")
-        return false
-
-    }
+fun signIn(email: String, password: String, navController: NavController)  {
     auth.signInWithEmailAndPassword(email, password)
-    if (auth.currentUser?.uid != "")
-        statement = true
-        userdat.userId = auth.currentUser?.uid
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Handle successful sign-in
+                navController.navigate(AppScreens.Bar.route)
 
-
-    return statement
+            } else {
+                // Handle sign-in failure
+            }
+        }
 }
