@@ -9,6 +9,9 @@ import com.example.projecttodolist.screens.LogInScreen
 import com.example.projecttodolist.screens.MainTaskScreen
 import com.example.projecttodolist.screens.RegisterScreen
 import com.example.projecttodolist.screens.Show
+import com.example.projecttodolist.screens.AddContact
+import com.example.projecttodolist.screens.ShowCollabs
+import com.example.projecttodolist.screens.ShowGroups
 
 @Composable
 fun AppNavigation() {
@@ -31,6 +34,15 @@ fun AppNavigation() {
         }
         composable(route = AppScreens.RegisterScreen.route){
             RegisterScreen(navController)
+        }
+        composable(route = AppScreens.AddContact.route){
+            AddContact(navController)
+        }
+        composable(route = AppScreens.ShowCollabs.route){
+            ShowCollabs(navController)
+        }
+        composable(route = AppScreens.ShowGroups.route){
+            ShowGroups(navController)
         }
     }
 }

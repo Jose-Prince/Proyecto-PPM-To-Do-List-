@@ -49,6 +49,7 @@ import com.example.projecttodolist.DrawerMenuItem
 import com.example.projecttodolist.Functions.*
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.GlobalVariables.userdat
+import com.example.projecttodolist.Navigation.AppScreens
 import com.example.projecttodolist.Navigation.BarNavigation
 import com.example.projecttodolist.Navigation.BottomBarScreens
 import com.example.projecttodolist.R
@@ -124,7 +125,13 @@ fun MainTaskScreen(navController: NavController){
                 ),
                 onItemClick = {
                     println("accesing to $it")
-                    GoToNavigationDrawerScreen(it.id)
+
+                    when(it.id) {
+                        "addRequest" -> navController.navigate(AppScreens.AddContact.route)
+                        "showCollabs" -> navController.navigate(AppScreens.ShowCollabs.route)
+                        "showGroups" -> navController.navigate(AppScreens.ShowGroups.route)
+                        else -> null
+                    }
                 })
             },
             bottomBar = { BottomBar(navController = navController)},
@@ -138,20 +145,6 @@ fun MainTaskScreen(navController: NavController){
         }
     }
 }
-
-@Composable()
-fun GoToNavigationDrawerScreen(screenId: String){
-    val context = LocalContext.current
-    val activity = when(screenId) {
-        "addRequest" -> CreateActivity::class.java
-        "showCollabs" -> CreateActivity::class.java
-        "showGroups" -> CreateActivity::class.java
-        else -> null
-    }
-    val intent = Intent(context, activity)
-    context.startActivity(intent)
-}
-
 
 @Composable
 fun FabAdd(navController : NavController,scope : CoroutineScope, scaffoldState: ScaffoldState){

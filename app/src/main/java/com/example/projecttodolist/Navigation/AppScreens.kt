@@ -15,4 +15,7 @@ sealed class AppScreens(val route : String) {
 
     //Pantalla de registro
     object RegisterScreen : AppScreens("register")
+    object AddContact : AppScreens("addRequest")
+    object ShowCollabs : AppScreens("showCollabs")
+    object ShowGroups : AppScreens("showGroups")
 }
