@@ -1,5 +1,6 @@
 package com.example.projecttodolist.screens
 
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -36,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.projecttodolist.Database.login
 import com.example.projecttodolist.Functions.*
+import com.example.projecttodolist.GlobalVariables.auth
 import com.example.projecttodolist.GlobalVariables.userdat
 import com.example.projecttodolist.Navigation.AppScreens
 import com.example.projecttodolist.ui.theme.blue
@@ -122,18 +123,7 @@ fun LogInScreen(navController: NavController) {
         Row {
             Spacer(modifier = Modifier.width(113.dp))
             Button(onClick = {
-
-                val token = login( auth, userdat.email.toString(), userdat.password.toString() )
-                if (token){
-                    Log.e("Funcional", userdat.email.toString())
-                    navController.navigate(AppScreens.Bar.route)
-                    Toast.makeText(context, "Bienvenido", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    Log.e("Fail", "conexion fallida")
-                    Toast.makeText(context, "Fallido", Toast.LENGTH_SHORT).show()
-
-                }
+                signIn( userdat.email.toString(), userdat.password.toString(), navController )
             },
                 colors = ButtonDefaults.buttonColors(green)
             ) {
@@ -167,4 +157,17 @@ fun LogInPrev() {
     val navController = rememberNavController()
     LogInScreen(navController = navController)
 
+}
+
+fun signIn(email: String, password: String, navController: NavController)  {
+    auth.signInWithEmailAndPassword(email, password)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Handle successful sign-in
+                navController.navigate(AppScreens.Bar.route)
+
+            } else {
+                // Handle sign-in failure
+            }
+        }
 }

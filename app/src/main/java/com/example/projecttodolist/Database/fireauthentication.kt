@@ -6,6 +6,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
 import android.widget.Toast
+import com.example.projecttodolist.GlobalVariables.auth
+import com.example.projecttodolist.GlobalVariables.loginbool
 import com.example.projecttodolist.GlobalVariables.userdat
 import com.example.projecttodolist.screens.MainTaskScreen
 import com.google.firebase.auth.FirebaseAuth
@@ -58,42 +60,5 @@ fun signUpUser(auth: FirebaseAuth, email: String, password : String, confirmatio
 
 
 
-fun login(auth: FirebaseAuth, email : String, password: String, ):Boolean {
-    var statement = false
-    if  (email.isBlank() || password.isBlank()) {
-        Log.e("el correo esta en blanco", "blank pass or email")
-        return false
 
-    }
-    auth.signInWithEmailAndPassword(email, password)
-        .addOnCompleteListener { signInTask ->
-            if (signInTask.isSuccessful) {
-                Log.e("Login succesful", "Exitos con el login")
-                val currentUser = auth.currentUser?.uid.toString()
-                userdat.userId = currentUser
-                statement = true
-
-            } else {
-                auth.fetchSignInMethodsForEmail(email)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful){
-                            val result = task.result
-                            if (result.equals(email)){
-                                Log.e("talvez", "no se")
-                            } else {
-                                Log.e("no Correo no son iguales", "correo no validas")
-                            }
-                        } else {
-
-                            Log.e("Sin internet", "Sin credencialess validas")
-                            }
-
-                        }
-                    statement = false
-                    }
-
-            }
-
-    return statement
-}
 
