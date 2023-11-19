@@ -3,7 +3,6 @@ package com.example.projecttodolist.screens
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -22,9 +21,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.FloatingActionButton
@@ -84,7 +81,6 @@ fun MainTaskScreen(navController: NavController){
             .fillMaxSize()
             .background(gray)
     ){
-
         Scaffold (
             topBar = {if (GlobalVariables.showTopBar){ Column (horizontalAlignment = Alignment.CenterHorizontally){
                 Box {
@@ -108,7 +104,7 @@ fun MainTaskScreen(navController: NavController){
                     fontSize = 35.sp)
             }}},
             drawerContent = {
-                            DrawerHeader()
+                DrawerHeader()
                 DrawerBody(items = listOf(
                     DrawerMenuItem(
                         id = "addRequest",
@@ -126,9 +122,10 @@ fun MainTaskScreen(navController: NavController){
                         image = R.drawable.baseline_people_alt_24
                     )
                 ),
-                    onItemClick = {
-                        println("Click item")
-                    })
+                onItemClick = {
+                    println("accesing to $it")
+                    GoToNavigationDrawerScreen(it.id)
+                })
             },
             bottomBar = { BottomBar(navController = navController)},
             scaffoldState = scaffoldState,
@@ -141,6 +138,20 @@ fun MainTaskScreen(navController: NavController){
         }
     }
 }
+
+@Composable()
+fun GoToNavigationDrawerScreen(screenId: String){
+    val context = LocalContext.current
+    val activity = when(screenId) {
+        "addRequest" -> CreateActivity::class.java
+        "showCollabs" -> CreateActivity::class.java
+        "showGroups" -> CreateActivity::class.java
+        else -> null
+    }
+    val intent = Intent(context, activity)
+    context.startActivity(intent)
+}
+
 
 @Composable
 fun FabAdd(navController : NavController,scope : CoroutineScope, scaffoldState: ScaffoldState){

@@ -6,9 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.projecttodolist.GlobalVariables
 import com.example.projecttodolist.screens.Calendar
-import com.example.projecttodolist.Activities.DailyCalendar
 import com.example.projecttodolist.screens.Settings
 import com.example.projecttodolist.screens.Show
+import com.example.projecttodolist.screens.AddContact
+import com.example.projecttodolist.screens.ShowCollabs
+import com.example.projecttodolist.screens.ShowGroups
 
 @Composable
 fun BarNavigation(navController: NavHostController) {
@@ -38,6 +40,24 @@ fun BarNavigation(navController: NavHostController) {
             GlobalVariables.showTopBar = false
             GlobalVariables.showFloatingButton = true
             Calendar(navController)
+        }
+
+        composable(route = BottomBarScreens.AddContact.route) {
+            GlobalVariables.showTopBar = true
+            GlobalVariables.showFloatingButton = false
+            AddContact(navController)
+        }
+
+        composable(route = BottomBarScreens.ShowCollabs.route) {
+            GlobalVariables.showTopBar = true
+            GlobalVariables.showFloatingButton = false
+            ShowCollabs(navController)
+        }
+
+        composable(route = BottomBarScreens.ShowGroups.route) {
+            GlobalVariables.showTopBar = true
+            GlobalVariables.showFloatingButton = false
+            ShowGroups(navController)
         }
     }
 }
