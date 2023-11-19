@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,13 +30,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.projecttodolist.Database.save
 import com.example.projecttodolist.Database.signUpUser
 import com.example.projecttodolist.Functions.DrawShape
 import com.example.projecttodolist.GlobalVariables.userdat
@@ -44,8 +47,6 @@ import com.example.projecttodolist.ui.theme.blue
 import com.example.projecttodolist.ui.theme.gray
 import com.example.projecttodolist.ui.theme.green
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -148,6 +149,11 @@ fun RegisterScreen(navController: NavController) {
                 textStyle = TextStyle(
                     textAlign = TextAlign.Center,
                     fontSize = 21.sp
+                ),
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Done,
+                    keyboardType = KeyboardType.Password
                 )
             )
         }
@@ -176,6 +182,11 @@ fun RegisterScreen(navController: NavController) {
                 textStyle = TextStyle(
                     textAlign = TextAlign.Center,
                     fontSize = 21.sp
+                ),
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Done,
+                    keyboardType = KeyboardType.Password
                 )
             )
         }
